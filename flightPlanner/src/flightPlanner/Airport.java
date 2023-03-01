@@ -1,21 +1,32 @@
 package flightPlanner;
 
-
-public class Airport {
+public class Airport { //extends Location? maybe?
 	private String ICAO;
 	private String name;
-	private Double latitude;
-	private Double longitude;
+	private Double latitude; //negative values represent going south, positive values represent going north
+	private Double longitude;//negative values represent going west, positive values represent going east
 	private double[] frequency;
 	private int[] radioType;
 	private int[] fuelType;
+	private Beacon[] beacons;
+	private Runway runway;
+	
+	
+	public Beacon[] getBeacon() {
+		return beacons;
+	}
+	
+	public void setBeacon(Beacon[] beacon) {
+		this.beacons = beacon;
+	}
 	
 	public String getICAO() {
 		return ICAO;
 	}
 	
-	public void setICAO(String iCAO) {
-		ICAO = iCAO;
+	public void setICAO(String ICAO) {
+		//Should only be called with a String length of between 3-4 characters.
+		this.ICAO = ICAO;
 	}
 	
 	public String getName() {
@@ -23,6 +34,7 @@ public class Airport {
 	}
 	
 	public void setName(String name) {
+		//Should only be called with a String value between 1-50 characters
 		this.name = name;
 	}
 	
@@ -31,6 +43,7 @@ public class Airport {
 	}
 	
 	public void setLatitude(Double latitude) {
+		//Should only be called with a Double value between -180 to 180
 		this.latitude = latitude;
 	}
 	
@@ -39,6 +52,7 @@ public class Airport {
 	}
 	
 	public void setFrequency(double[] frequency) {
+		//Should only be called with an array that holds double values between 118 to 135.975
 		this.frequency = frequency;
 	
 	}
@@ -47,6 +61,7 @@ public class Airport {
 	}
 	
 	public void setLongitude(Double longitude) {
+		//Should only be called with a Double value between -90 to 90
 		this.longitude = longitude;
 	}
 	
@@ -55,6 +70,7 @@ public class Airport {
 	}
 	
 	public void setRadioType(int[] radioType) {
+		//Should only be called with an array that holds integer values between 0 to 2
 		this.radioType = radioType;
 	}
 	
@@ -63,6 +79,7 @@ public class Airport {
 	}
 	
 	public void setFuelType(int[] fuelType) {
+		//Should only be called when the array has between 1-3 items, with integer values from 0 to 3.
 		this.fuelType = fuelType;
 	}	
 }
