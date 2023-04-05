@@ -91,6 +91,15 @@ public class Airport { //extends Location? maybe?
 		this.runway = runway;
 	}	
 	
+	public void writeAirport(Airport airport) {
+		//Writes airport to the end of the file
+	}
+	
+	public void displayAll(Airport airport) {
+		//Displays all airports from a file
+	}
+	
+	
 	public void displayInfo(Airport airport) {
 		System.out.println(airport.getICAO());
 		System.out.println(airport.getName());
