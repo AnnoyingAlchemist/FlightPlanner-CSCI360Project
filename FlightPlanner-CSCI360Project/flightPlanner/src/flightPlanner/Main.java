@@ -151,12 +151,17 @@ public class Main {
 	}
 	
 	public static void createAirportLoop(){
-		boolean endLoop = false;
-		while(!endLoop) {
-			System.out.println();
-			Scanner scan = new Scanner(System.in);  
-			System.out.println("Menu option:");
-			String menuOption = scan.nextLine();
+		boolean validInput = false;
+		System.out.println();
+		Scanner scan = new Scanner(System.in); 
+		String ICAO;
+		
+		while(!validInput) {
+			System.out.println("Enter ICAO:");
+			ICAO = scan.nextLine();
+			//if ICAO is valid:
+			validInput = true;
+			//else, repeat loop
 		}
 	}
 	
