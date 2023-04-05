@@ -74,13 +74,14 @@ public class FlightPlan {
 		return distance;
 	}
 	
-	public double[] calculateRefuel(Airplane plane, Airport start, Airport end){
+	public double[][] calculateRefuel(Airplane plane, Airport start, Airport end){
 		//Calculates refueling stops between the two given Airports 
 		//based off of the given Airplane's fuel capacity and fuel efficiency
 		//Should return an array of arrays that contains the Latitude & Longitude of each stop in an integer array. //or maybe just on array, refuelStops[]?
 		// e.g (stops[0] and stops[1] makes up ONE location, with the order of the pair being: latitude first and longitude second)
 			//It might just be less of a headache to create a Location Class...
-		double[] array = {1.0, 1.0};
+		double[] stop = {1.0, 1.0};
+		double[][] array = {stop, stop};
 		return array;
 	}
 }

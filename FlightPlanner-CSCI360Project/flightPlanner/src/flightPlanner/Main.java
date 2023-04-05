@@ -9,6 +9,7 @@ public class Main {
 		airplaneMenu();
 		beaconMenu();
 		runwayMenu();
+		System.out.println("This is not a real Flight Planning System & it should not be used as such."); //Replace with actual disclamer
 		boolean validLogin = false;
 		//Ask user for user name and password, and store the answers as variables using a scanner object. 
 		//Continues until a valid login is given.
@@ -121,7 +122,7 @@ public class Main {
 			
 			switch(menuOption){
 				case "1":
-					System.out.println("Create an Airport"); //replace these print statements with appropriate method calls from Airport Class
+					createAirportLoop(); //System.out.println("Create an Airport"); //replace these print statements with appropriate method calls from Airport Class
 					break;
 				case "2":
 					System.out.println("Modify an Airport");
@@ -146,6 +147,16 @@ public class Main {
 					System.out.println("Invalid input! Try again.\n");
 					break;
 			}
+		}
+	}
+	
+	public static void createAirportLoop(){
+		boolean endLoop = false;
+		while(!endLoop) {
+			System.out.println();
+			Scanner scan = new Scanner(System.in);  
+			System.out.println("Menu option:");
+			String menuOption = scan.nextLine();
 		}
 	}
 	
