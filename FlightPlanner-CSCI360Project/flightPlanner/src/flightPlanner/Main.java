@@ -1,4 +1,5 @@
 package flightPlanner;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -151,6 +152,7 @@ public class Main {
 	}
 	
 	public static void createAirportLoop(){
+		//Should be called anytime you would create an airport in a sub menu
 		boolean validInput = false;
 		System.out.println();
 		Scanner scan = new Scanner(System.in); 
@@ -158,14 +160,15 @@ public class Main {
 		String name;
 		double latitude;
 		double longitude;
-		double[] frequency;
-		int[] radioType;
-		int[] fuelType;
+		double frequency;
+		ArrayList<String> radioType = new ArrayList<String>();
+		ArrayList<String> fuelType = new ArrayList<String>();
 		
 		String beaconType;
 		String beaconName;
 		String runway;
-		
+		//only create airport object at the end to prevent half-complete objects from being made 
+		//if user shuts down program halfway through.
 		while(!validInput) {
 			System.out.println("Enter the ICAO:");
 			ICAO = scan.nextLine();
@@ -221,14 +224,73 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter the frequency: \n"
-					+ "(Negative values represent going West)");
-			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
-			if(longitude <90 && longitude >-90) {
+			System.out.println("Enter the frequency: ");
+			frequency = scan.nextDouble(); //118 to 135.975
+			if(frequency <= 135.975 && frequency >= 118) {
 				validInput = true;				
 			}
 			else {
-				System.out.println("Longitude must be between -90 to 90 degrees!\n");
+				System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a radio type: \n"
+					+ "(Type 'done' to finish)");
+			radioType.add(0, scan.next()); 
+			if(radioType.get(0)== "bye" || radioType.get(0) == "hi") { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else if(radioType.get(0) == "done") {
+				radioType.remove(0);
+				radioType.add(0, "N/A");
+				validInput = true;
+			}
+			else {
+				radioType.remove(0);
+				System.out.println("Invalid radio type!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a radio type: \n"
+					+ "(Type 'done' to finish)");
+			radioType.add(1, scan.next()); 
+			if(radioType.get(1)== "bye" || radioType.get(1) == "hi") { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else if(radioType.get(1) == "done") {
+				radioType.remove(1);
+				radioType.add(1, "N/A");
+				validInput = true;
+			}
+			else {
+				radioType.remove(1);
+				System.out.println("Invalid radio type!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a radio type: \n"
+					+ "(Type 'done' to finish)");
+			radioType.add(2, scan.next()); 
+			if(radioType.get(2)== "bye" || radioType.get(2) == "hi") { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else if(radioType.get(2) == "done") {
+				radioType.remove(2);
+				radioType.add(2, "N/A");
+				validInput = true;
+			}
+			else {
+				radioType.remove(2);
+				System.out.println("Invalid radio type!\n");
 			}
 		}
 	}
