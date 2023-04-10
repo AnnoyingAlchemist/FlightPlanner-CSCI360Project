@@ -1,11 +1,13 @@
 package flightPlanner;
 
+import java.util.ArrayList;
+
 public class Airplane {
 	private String make;
 	private String model;
 	private Double fuelEfficiency; //in liters per hundred miles
 	private Double fuelCapacity; //in liters
-	private int[] fuelType; // | 0 = jet A | 1 = Jet A1 | 2 = Jet B | 3 = ABGAS |
+	private ArrayList<Integer> fuelType; // | 0 = jet A | 1 = Jet A1 | 2 = Jet B | 3 = ABGAS |
 	private Double airspeed; //in miles per hour
 	
 	public String getMake() {
@@ -36,10 +38,10 @@ public class Airplane {
 		//Should only be called with a parameter value of less than 100,000.
 		this.fuelCapacity = fuelCapacity;
 	}
-	public int[] getFuelType() {
+	public ArrayList<Integer> getFuelType() {
 		return fuelType;
 	}
-	public void setFuelType(int[] fuelType) {
+	public void setFuelType(ArrayList<Integer> fuelType) {
 		//Should only be called when the array has between 1-3 items, with integer values from 0 to 3.
 		this.fuelType = fuelType;
 	}

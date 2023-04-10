@@ -156,19 +156,15 @@ public class Main {
 		boolean validInput = false;
 		System.out.println();
 		Scanner scan = new Scanner(System.in); 
-		String ICAO;
-		String name;
-		double latitude;
-		double longitude;
-		double frequency;
+		String ICAO = "";
+		String name = "";
+		double latitude = 0.0;
+		double longitude = 0.0;
+		ArrayList<Double> frequency = new ArrayList<Double>();;
 		ArrayList<String> radioType = new ArrayList<String>();
 		ArrayList<String> fuelType = new ArrayList<String>();
 		
-		String beaconType;
-		String beaconName;
-		String runway;
-		//only create airport object at the end to prevent half-complete objects from being made 
-		//if user shuts down program halfway through.
+		//only creates airport object at the end to prevent half-complete objects from being made if user shuts down program halfway through.
 		while(!validInput) {
 			System.out.println("Enter the ICAO:");
 			ICAO = scan.nextLine();
@@ -225,11 +221,12 @@ public class Main {
 		
 		while(!validInput) {
 			System.out.println("Enter the frequency: ");
-			frequency = scan.nextDouble(); //118 to 135.975
-			if(frequency <= 135.975 && frequency >= 118) {
+			frequency.add(scan.nextDouble()); //118 to 135.975
+			if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
 				validInput = true;				
 			}
 			else {
+				frequency.remove(0);
 				System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
 			}
 		}
@@ -237,16 +234,10 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a radio type: \n"
-					+ "(Type 'done' to finish)");
+			System.out.println("Enter a radio type: \n");
 			radioType.add(0, scan.next()); 
-			if(radioType.get(0)== "bye" || radioType.get(0) == "hi") { //need to check data dictionary for parameters later...
+			if(radioType.get(0).equals("bye") || radioType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
 				validInput = true;				
-			}
-			else if(radioType.get(0) == "done") {
-				radioType.remove(0);
-				radioType.add(0, "N/A");
-				validInput = true;
 			}
 			else {
 				radioType.remove(0);
@@ -257,13 +248,13 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a radio type: \n"
+			System.out.println("Enter a second radio type: \n"
 					+ "(Type 'done' to finish)");
 			radioType.add(1, scan.next()); 
-			if(radioType.get(1)== "bye" || radioType.get(1) == "hi") { //need to check data dictionary for parameters later...
+			if(radioType.get(1).equals("bye") || radioType.get(1).equals("hi")) { //need to check data dictionary for parameters later...
 				validInput = true;				
 			}
-			else if(radioType.get(1) == "done") {
+			else if(radioType.get(1).equals("done")) {
 				radioType.remove(1);
 				radioType.add(1, "N/A");
 				validInput = true;
@@ -277,13 +268,13 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a radio type: \n"
+			System.out.println("Enter a third radio type: \n"
 					+ "(Type 'done' to finish)");
 			radioType.add(2, scan.next()); 
-			if(radioType.get(2)== "bye" || radioType.get(2) == "hi") { //need to check data dictionary for parameters later...
+			if(radioType.get(2).equals("bye") || radioType.get(2).equals("hi")) { //need to check data dictionary for parameters later...
 				validInput = true;				
 			}
-			else if(radioType.get(2) == "done") {
+			else if(radioType.get(2).equals("done")) {
 				radioType.remove(2);
 				radioType.add(2, "N/A");
 				validInput = true;
@@ -293,6 +284,72 @@ public class Main {
 				System.out.println("Invalid radio type!\n");
 			}
 		}
+validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a fuel type: \n");
+			fuelType.add(0, scan.next()); 
+			if(fuelType.get(0).equals("bye") || fuelType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else {
+				fuelType.remove(0);
+				System.out.println("Invalid fuel type!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a second fuel type: \n"
+					+ "(Type 'done' to finish)");
+			fuelType.add(1, scan.next()); 
+			if(fuelType.get(1).equals("bye") || fuelType.get(1).equals("hi")) { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else if(fuelType.get(1).equals("done")) {
+				fuelType.remove(1);
+				fuelType.add(1, "N/A");
+				validInput = true;
+			}
+			else {
+				fuelType.remove(1);
+				System.out.println("Invalid fuel type!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a third fuel type: \n"
+					+ "(Type 'done' to finish)");
+			fuelType.add(2, scan.next()); 
+			if(fuelType.get(2).equals("bye") || fuelType.get(2).equals("hi")) { //need to check data dictionary for parameters later...
+				validInput = true;				
+			}
+			else if(fuelType.get(2).equals("done")) {
+				fuelType.remove(2);
+				fuelType.add(2, "N/A");
+				validInput = true;
+			}
+			else {
+				fuelType.remove(2);
+				System.out.println("Invalid fuel type!\n");
+			}
+		}
+		
+		Airport airport = new Airport();
+		airport.setICAO(ICAO);
+		airport.setName(name);
+		airport.setLatitude(latitude);
+		airport.setLongitude(longitude);
+		airport.setFrequency(frequency);
+		//airport.setRadioType(radioType);
+		//airport.setRadioType(fuelType);
+		
+		//Airport airport = new Airport(ICAO, name, latitude, longitude, frequency, radioType, fuelType);
+		//airport.Add();
+		
 	}
 	
 	public static void airplaneMenu() {

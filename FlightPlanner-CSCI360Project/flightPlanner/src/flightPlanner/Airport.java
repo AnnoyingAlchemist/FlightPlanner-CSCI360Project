@@ -1,17 +1,29 @@
  package flightPlanner;
 
+import java.util.ArrayList;
+
 public class Airport { //extends Location? maybe?
 	private String ICAO;
 	private String name;
 	private Double latitude; //negative values represent going south, positive values represent going north
 	private Double longitude;//negative values represent going west, positive values represent going east
-	private double[] frequency;
-	private int[] radioType;
-	private int[] fuelType;
-	private Beacon[] beacons;
+	private ArrayList<Double> frequency;
+	private ArrayList<Integer> radioType;
+	private ArrayList<Integer> fuelType;
+	//private Beacon[] beacons;
 	private Runway runway;
 	
+	public void Airport(String icao, String name, Double latitude, Double longitude, ArrayList<Double> freq, ArrayList<Integer> radioType, ArrayList<Integer> fuelType) {
+		this.ICAO = icao;
+		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.frequency = freq;
+		this.radioType = radioType;
+		this.fuelType = fuelType;
+	}
 	
+	/*
 	public Beacon[] getBeacons() {
 		return beacons;
 	}
@@ -19,7 +31,7 @@ public class Airport { //extends Location? maybe?
 	public void setBeacons(Beacon[] beacon) {
 		this.beacons = beacon;
 	}
-	
+	*/
 	public String getICAO() {
 		return ICAO;
 	}
@@ -47,11 +59,11 @@ public class Airport { //extends Location? maybe?
 		this.latitude = latitude;
 	}
 	
-	public double[] getFrequency() {
+	public ArrayList<Double> getFrequency() {
 		return frequency;
 	}
 	
-	public void setFrequency(double[] frequency) {
+	public void setFrequency(ArrayList<Double> frequency) {
 		//Should only be called with an array that holds double values between 118 to 135.975
 		this.frequency = frequency;
 	
@@ -65,20 +77,20 @@ public class Airport { //extends Location? maybe?
 		this.longitude = longitude;
 	}
 	
-	public int[] getRadioType() {
+	public ArrayList<Integer> getRadioType() {
 		return radioType;
 	}
 	
-	public void setRadioType(int[] radioType) {
+	public void setRadioType(ArrayList<Integer> radioType) {
 		//Should only be called with an array that holds integer values between 0 to 2
 		this.radioType = radioType;
 	}
 	
-	public int[] getFuelType() {
+	public ArrayList<Integer> getFuelType() {
 		return fuelType;
 	}
 	
-	public void setFuelType(int[] fuelType) {
+	public void setFuelType(ArrayList<Integer> fuelType) {
 		//Should only be called when the array has between 1-3 items, with integer values from 0 to 3.
 		this.fuelType = fuelType;
 	}
@@ -99,7 +111,7 @@ public class Airport { //extends Location? maybe?
 		System.out.println(airport.getFrequency().toString());
 		System.out.println(airport.getRadioType().toString());
 		System.out.println(airport.getFuelType().toString());
-		System.out.println(airport.getBeacons().toString());
+		//System.out.println(airport.getBeacons().toString());
 		System.out.println(airport.getRunway());
 	}
 }
