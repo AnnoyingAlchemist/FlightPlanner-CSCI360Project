@@ -9,7 +9,7 @@ public class Main {
 		airplaneMenu();
 		beaconMenu();
 		runwayMenu();
-		System.out.println("This is not a real Flight Planning System & it should not be used as such."); //Replace with actual disclamer
+		System.out.println("DISCLAIMER: This is not a real Flight Planning System & it should not be used as such."); //Replace with actual disclamer
 		boolean validLogin = false;
 		//Ask user for user name and password, and store the answers as variables using a scanner object. 
 		//Continues until a valid login is given.
@@ -155,13 +155,81 @@ public class Main {
 		System.out.println();
 		Scanner scan = new Scanner(System.in); 
 		String ICAO;
+		String name;
+		double latitude;
+		double longitude;
+		double[] frequency;
+		int[] radioType;
+		int[] fuelType;
+		
+		String beaconType;
+		String beaconName;
+		String runway;
 		
 		while(!validInput) {
-			System.out.println("Enter ICAO:");
+			System.out.println("Enter the ICAO:");
 			ICAO = scan.nextLine();
-			//if ICAO is valid:
-			validInput = true;
-			//else, repeat loop
+			if(ICAO.length() <5 && ICAO.length() >2) {
+				validInput = true;				
+			}
+			else {
+				System.out.println("ICAO must be between 3-4 characters!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the name:");
+			name = scan.nextLine();
+			if(name.length() <50 && name.length() >0) {
+				validInput = true;				
+			}
+			else {
+				System.out.println("Name must be between 0-50 characters!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the latitude: \n"
+					+ "(Negative values represent going South)");
+			latitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
+			if(latitude <90 && latitude >-90) {
+				validInput = true;				
+			}
+			else {
+				System.out.println("Latitude must be between -90 to 90 degrees!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the longitude: \n"
+					+ "(Negative values represent going West)");
+			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
+			if(longitude <90 && longitude >-90) {
+				validInput = true;				
+			}
+			else {
+				System.out.println("Longitude must be between -90 to 90 degrees!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the frequency: \n"
+					+ "(Negative values represent going West)");
+			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
+			if(longitude <90 && longitude >-90) {
+				validInput = true;				
+			}
+			else {
+				System.out.println("Longitude must be between -90 to 90 degrees!\n");
+			}
 		}
 	}
 	
