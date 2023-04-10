@@ -43,7 +43,7 @@ public class Airport { //extends Location? maybe?
 	}
 	
 	public void setLatitude(Double latitude) {
-		//Should only be called with a Double value between -180 to 180
+		//Should only be called with a Double value between -90 to 90
 		this.latitude = latitude;
 	}
 	
