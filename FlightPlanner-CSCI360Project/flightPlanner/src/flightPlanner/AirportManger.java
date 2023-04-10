@@ -4,7 +4,14 @@ import java.io.*;
 import java.util.*;
 public class AirportManger import Airplane { //import airports
 	
-	private AirportManger(String make; String model; double fuelEfficiency; double fuelCapacity; int[] fuelType; double airspeed);
+	public class AirportManager{ 
+	String make; 
+	String model; 
+	double fuelEfficiency; 
+	double fuelCapacity; 
+	int[] fuelType; 
+	double airspeed;
+	
 	
 	public static void Add() throws IOException {
 		
@@ -53,5 +60,5 @@ public class AirportManger import Airplane { //import airports
 	public static void RDisplay() throws IOException{
 		//Will display list of all runways.
 	}
-
+	}
 }
