@@ -2,7 +2,7 @@ package flightPlanner;
 
 import java.io.*;
 import java.util.*;
-public class AirportManger import Airplane { //import airports
+public class AirportManger extends Airport { //import airports
 	
 	public class AirportManager{ 
 	String make; 

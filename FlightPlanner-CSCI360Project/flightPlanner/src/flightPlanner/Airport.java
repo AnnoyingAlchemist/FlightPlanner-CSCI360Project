@@ -23,6 +23,22 @@ public class Airport { //extends Location? maybe?
 		this.fuelType = fuelType;
 	}
 	
+	public void Airport() {
+		ArrayList<Integer> temp = new ArrayList<>();
+		ArrayList<Double> temp2 = new ArrayList<>();
+		ArrayList<Integer> temp3 = new ArrayList<>();
+		temp.add(0);
+		temp2.add(0.0);
+		temp3.add(0);
+		this.ICAO = "NULL";
+		this.name = "N/A";
+		this.latitude = 0.0;
+		this.longitude = 0.0;
+		this.radioType = temp;
+		this.frequency = temp2;
+		this.fuelType = temp3;
+	}
+	
 	/*
 	public Beacon[] getBeacons() {
 		return beacons;
@@ -103,7 +119,7 @@ public class Airport { //extends Location? maybe?
 		this.runway = runway;
 	}	
 	
-	public void displayInfo(Airport airport) {
+	public static void displayInfo(Airport airport) {
 		System.out.println(airport.getICAO());
 		System.out.println(airport.getName());
 		System.out.println(airport.getLatitude());

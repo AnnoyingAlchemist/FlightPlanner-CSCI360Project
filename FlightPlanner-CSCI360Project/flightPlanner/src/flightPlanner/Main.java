@@ -113,7 +113,7 @@ public class Main {
 						+ "----------------------------------------------------------\n");
 	}
 	
-	public static void airportMenuLoop() { //For use in the main method
+	public static void airportMenuLoop() { //For use in the main method when user chooses a menu option related to airports
 		boolean exitProgram = false;
 		while(!exitProgram) {	
 			airportMenu();
@@ -152,7 +152,7 @@ public class Main {
 	}
 	
 	public static void createAirportLoop(){
-		//Should be called anytime you would create an airport in a sub menu
+		//Should be called anytime you would ask for user input to create an airport.
 		boolean validInput = false;
 		System.out.println();
 		Scanner scan = new Scanner(System.in); 
@@ -164,12 +164,14 @@ public class Main {
 		ArrayList<String> radioType = new ArrayList<String>();
 		ArrayList<String> fuelType = new ArrayList<String>();
 		
-		//only creates airport object at the end to prevent half-complete objects from being made if user shuts down program halfway through.
+		Airport airport = new Airport();
+		
 		while(!validInput) {
 			System.out.println("Enter the ICAO:");
 			ICAO = scan.nextLine();
 			if(ICAO.length() <5 && ICAO.length() >2) {
-				validInput = true;				
+				validInput = true;	
+				airport.setICAO(ICAO);
 			}
 			else {
 				System.out.println("ICAO must be between 3-4 characters!\n");
@@ -182,7 +184,8 @@ public class Main {
 			System.out.println("Enter the name:");
 			name = scan.nextLine();
 			if(name.length() <50 && name.length() >0) {
-				validInput = true;				
+				validInput = true;
+				airport.setName(name);
 			}
 			else {
 				System.out.println("Name must be between 0-50 characters!\n");
@@ -196,7 +199,8 @@ public class Main {
 					+ "(Negative values represent going South)");
 			latitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
 			if(latitude <90 && latitude >-90) {
-				validInput = true;				
+				validInput = true;
+				airport.setLatitude(latitude);
 			}
 			else {
 				System.out.println("Latitude must be between -90 to 90 degrees!\n");
@@ -210,7 +214,8 @@ public class Main {
 					+ "(Negative values represent going West)");
 			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
 			if(longitude <90 && longitude >-90) {
-				validInput = true;				
+				validInput = true;	
+				airport.setLongitude(longitude);
 			}
 			else {
 				System.out.println("Longitude must be between -90 to 90 degrees!\n");
@@ -223,7 +228,8 @@ public class Main {
 			System.out.println("Enter the frequency: ");
 			frequency.add(scan.nextDouble()); //118 to 135.975
 			if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
-				validInput = true;				
+				validInput = true;		
+				airport.setFrequency(frequency);
 			}
 			else {
 				frequency.remove(0);
@@ -237,7 +243,9 @@ public class Main {
 			System.out.println("Enter a radio type: \n");
 			radioType.add(0, scan.next()); 
 			if(radioType.get(0).equals("bye") || radioType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
-				validInput = true;				
+				validInput = true;	
+				//airport.setRadioType(radioType);
+				
 			}
 			else {
 				radioType.remove(0);
@@ -290,7 +298,8 @@ validInput = false;
 			System.out.println("Enter a fuel type: \n");
 			fuelType.add(0, scan.next()); 
 			if(fuelType.get(0).equals("bye") || fuelType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
-				validInput = true;				
+				validInput = true;
+				//airport.setFuelType(fuelType); //should be a method that appends a fuel type to a list or something....
 			}
 			else {
 				fuelType.remove(0);
@@ -338,17 +347,11 @@ validInput = false;
 			}
 		}
 		
-		Airport airport = new Airport();
-		airport.setICAO(ICAO);
-		airport.setName(name);
-		airport.setLatitude(latitude);
-		airport.setLongitude(longitude);
-		airport.setFrequency(frequency);
-		//airport.setRadioType(radioType);
-		//airport.setRadioType(fuelType);
+		
 		
 		//Airport airport = new Airport(ICAO, name, latitude, longitude, frequency, radioType, fuelType);
 		//airport.Add();
+		Airport.displayInfo(airport);
 		
 	}
 	
@@ -364,7 +367,7 @@ validInput = false;
 				+ "----------------------------------------------------------\n");
 	}
 	
-	public static void airplaneMenuLoop() { //For use in the main method
+	public static void airplaneMenuLoop() { //For use in the main method for user to pick a menu option related to airplane
 		boolean exitProgram = false;
 		while(!exitProgram) {	
 			airplaneMenu();
@@ -396,7 +399,7 @@ validInput = false;
 		}
 	}
 	
-	public static void beaconMenu() {
+	public static void beaconMenu() { 
 		//Display a text menu full of actions that the user can take. ONLY displays the text, has no functional use.
 		System.out.println("----------------------------------------------------------\r\n"
 				+ "1 - Add a Beacon to an airport\r\n"
@@ -404,6 +407,7 @@ validInput = false;
 				+ "3 - Delete a Beacon from an airport\r\n"
 				+ "4 - Display all Beacons\r\n"
 				+ "5 - Back\r\n"
+				+ "<Beacon Functionality has been removed for the time being>" 
 				+ "----------------------------------------------------------\r\n");
 	}
 	
