@@ -160,9 +160,9 @@ public class Main {
 		String name = "";
 		double latitude = 0.0;
 		double longitude = 0.0;
-		ArrayList<Double> frequency = new ArrayList<Double>();;
-		ArrayList<String> radioType = new ArrayList<String>();
-		ArrayList<String> fuelType = new ArrayList<String>();
+		ArrayList<Double> frequency = new ArrayList<>();
+		ArrayList<String> radioType = new ArrayList<>();
+		ArrayList<String> fuelType = new ArrayList<>();
 		
 		Airport airport = new Airport();
 		
@@ -351,7 +351,7 @@ validInput = false;
 		
 		//Airport airport = new Airport(ICAO, name, latitude, longitude, frequency, radioType, fuelType);
 		//airport.Add();
-		Airport.displayInfo(airport);
+		airport.displayInfo();
 		
 	}
 	

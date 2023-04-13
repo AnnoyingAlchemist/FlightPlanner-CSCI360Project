@@ -1,6 +1,7 @@
  package flightPlanner;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Airport { //extends Location? maybe?
 	private String ICAO;
@@ -8,12 +9,12 @@ public class Airport { //extends Location? maybe?
 	private Double latitude; //negative values represent going south, positive values represent going north
 	private Double longitude;//negative values represent going west, positive values represent going east
 	private ArrayList<Double> frequency;
-	private ArrayList<Integer> radioType;
-	private ArrayList<Integer> fuelType;
+	private ArrayList<String> radioType;
+	private ArrayList<String> fuelType;
 	//private Beacon[] beacons;
 	private Runway runway;
 	
-	public void Airport(String icao, String name, Double latitude, Double longitude, ArrayList<Double> freq, ArrayList<Integer> radioType, ArrayList<Integer> fuelType) {
+	public Airport(String icao, String name, Double latitude, Double longitude, ArrayList<Double> freq, ArrayList<String> radioType, ArrayList<String> fuelType) {
 		this.ICAO = icao;
 		this.name = name;
 		this.latitude = latitude;
@@ -23,13 +24,19 @@ public class Airport { //extends Location? maybe?
 		this.fuelType = fuelType;
 	}
 	
-	public void Airport() {
-		ArrayList<Integer> temp = new ArrayList<>();
+	public Airport() {
+		ArrayList<String> temp = new ArrayList<>();
 		ArrayList<Double> temp2 = new ArrayList<>();
-		ArrayList<Integer> temp3 = new ArrayList<>();
-		temp.add(0);
+		ArrayList<String> temp3 = new ArrayList<>();
+		temp.add("N/A");
+		temp.add("N/A");
+		temp.add("N/A");
 		temp2.add(0.0);
-		temp3.add(0);
+		temp2.add(0.0);
+		temp2.add(0.0);
+		temp3.add("N/A");
+		temp3.add("N/A");
+		temp3.add("N/A");
 		this.ICAO = "NULL";
 		this.name = "N/A";
 		this.latitude = 0.0;
@@ -93,20 +100,20 @@ public class Airport { //extends Location? maybe?
 		this.longitude = longitude;
 	}
 	
-	public ArrayList<Integer> getRadioType() {
+	public ArrayList<String> getRadioType() {
 		return radioType;
 	}
 	
-	public void setRadioType(ArrayList<Integer> radioType) {
+	public void setRadioType(ArrayList<String> radioType) {
 		//Should only be called with an array that holds integer values between 0 to 2
 		this.radioType = radioType;
 	}
 	
-	public ArrayList<Integer> getFuelType() {
+	public ArrayList<String> getFuelType() {
 		return fuelType;
 	}
 	
-	public void setFuelType(ArrayList<Integer> fuelType) {
+	public void setFuelType(ArrayList<String> fuelType) {
 		//Should only be called when the array has between 1-3 items, with integer values from 0 to 3.
 		this.fuelType = fuelType;
 	}
@@ -119,15 +126,20 @@ public class Airport { //extends Location? maybe?
 		this.runway = runway;
 	}	
 	
-	public static void displayInfo(Airport airport) {
-		System.out.println(airport.getICAO());
-		System.out.println(airport.getName());
-		System.out.println(airport.getLatitude());
-		System.out.println(airport.getLongitude());
-		System.out.println(airport.getFrequency().toString());
-		System.out.println(airport.getRadioType().toString());
-		System.out.println(airport.getFuelType().toString());
+	public void displayInfo() {
+		System.out.println("ICAO: "+ getICAO());
+		System.out.println("Name: " + getName());
+		System.out.println("Latitude: " + getLatitude());
+		System.out.println("Longitude:" + getLongitude());
+		
+		String frequencyString = getFrequency().stream().map(Object::toString).collect(Collectors.joining(", "));
+		String radioString = getRadioType().stream().map(Object::toString).collect(Collectors.joining(", "));
+		String fuelString = getFuelType().stream().map(Object::toString).collect(Collectors.joining(", "));
+		
+		System.out.println("Frequencies: " + frequencyString);
+		System.out.println("Radio Types: " + radioString);
+		System.out.println("Copmatible Fuel Types: " + fuelString);
 		//System.out.println(airport.getBeacons().toString());
-		System.out.println(airport.getRunway());
+		System.out.println("Runway: " + getRunway());
 	}
 }
