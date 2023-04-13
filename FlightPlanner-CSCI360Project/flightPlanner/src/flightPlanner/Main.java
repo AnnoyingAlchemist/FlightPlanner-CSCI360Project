@@ -198,7 +198,7 @@ public class Main {
 			System.out.println("Enter the latitude: \n"
 					+ "(Negative values represent going South)");
 			latitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
-			if(latitude <90 && latitude >-90) {
+			if(latitude <=90 && latitude >=-90) {
 				validInput = true;
 				airport.setLatitude(latitude);
 			}
@@ -213,7 +213,7 @@ public class Main {
 			System.out.println("Enter the longitude: \n"
 					+ "(Negative values represent going West)");
 			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
-			if(longitude <90 && longitude >-90) {
+			if(longitude <=90 && longitude >=-90) {
 				validInput = true;	
 				airport.setLongitude(longitude);
 			}
@@ -240,11 +240,11 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a radio type: \n");
-			radioType.add(0, scan.next()); 
-			if(radioType.get(0).equals("bye") || radioType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
+			System.out.println("Enter a third radio type: \n"
+					+ "| VHF | UHF | SHF |");
+			radioType.add(0, scan.next().toUpperCase()); 
+			if(radioType.get(0).equals("VHF") || radioType.get(0).equals("SHF") || radioType.get(0).equals("UHF")) { 
 				validInput = true;	
-				//airport.setRadioType(radioType);
 				
 			}
 			else {
@@ -257,19 +257,19 @@ public class Main {
 		
 		while(!validInput) {
 			System.out.println("Enter a second radio type: \n"
-					+ "(Type 'done' to finish)");
-			radioType.add(1, scan.next()); 
-			if(radioType.get(1).equals("bye") || radioType.get(1).equals("hi")) { //need to check data dictionary for parameters later...
+					+ "(Type 'done' to skip)");
+			radioType.add(1, scan.next().toUpperCase()); 
+			if(radioType.get(1).equals("VHF") || radioType.get(1).equals("SHF") || radioType.get(1).equals("UHF")) { 
 				validInput = true;				
 			}
-			else if(radioType.get(1).equals("done")) {
-				radioType.remove(1);
-				radioType.add(1, "N/A");
+			else if(radioType.get(1).equals("DONE")) {
+				radioType.set(1, "N/A");
 				validInput = true;
 			}
 			else {
 				radioType.remove(1);
-				System.out.println("Invalid radio type!\n");
+				System.out.println("Invalid radio type!\n"
+						+ "| VHF | UHF | SHF |\n");
 			}
 		}
 		
@@ -277,29 +277,30 @@ public class Main {
 		
 		while(!validInput) {
 			System.out.println("Enter a third radio type: \n"
-					+ "(Type 'done' to finish)");
-			radioType.add(2, scan.next()); 
-			if(radioType.get(2).equals("bye") || radioType.get(2).equals("hi")) { //need to check data dictionary for parameters later...
+					+ "(Type 'done' to skip)");
+			radioType.add(2, scan.next().toUpperCase()); 
+			if(radioType.get(2).equals("VHF") || radioType.get(2).equals("SHF") || radioType.get(2).equals("UHF")) { 
 				validInput = true;				
 			}
-			else if(radioType.get(2).equals("done")) {
-				radioType.remove(2);
-				radioType.add(2, "N/A");
+			else if(radioType.get(2).equals("DONE")) {
+				radioType.set(2, "N/A");
 				validInput = true;
 			}
 			else {
 				radioType.remove(2);
-				System.out.println("Invalid radio type!\n");
+				System.out.println("Invalid radio type!\n"
+						+ "| VHF | UHF | SHF |\n");
 			}
 		}
-validInput = false;
+		airport.setRadioType(radioType);
+		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a fuel type: \n");
-			fuelType.add(0, scan.next()); 
-			if(fuelType.get(0).equals("bye") || fuelType.get(0).equals("hi")) { //need to check data dictionary for parameters later...
+			System.out.println("Enter a fuel type: \n"
+					+"| JetA | JetA1 | JetB | AVGAS |");
+			fuelType.add(0, scan.next().toUpperCase()); 
+			if(fuelType.get(0).equals("JETA") || fuelType.get(0).equals("JETA1") || fuelType.get(0).equals("JETB") || fuelType.get(0).equals("AVGAS")) { 
 				validInput = true;
-				//airport.setFuelType(fuelType); //should be a method that appends a fuel type to a list or something....
 			}
 			else {
 				fuelType.remove(0);
@@ -311,19 +312,19 @@ validInput = false;
 		
 		while(!validInput) {
 			System.out.println("Enter a second fuel type: \n"
-					+ "(Type 'done' to finish)");
-			fuelType.add(1, scan.next()); 
-			if(fuelType.get(1).equals("bye") || fuelType.get(1).equals("hi")) { //need to check data dictionary for parameters later...
+					+ "(Type 'done' to skip)");
+			fuelType.add(1, scan.next().toUpperCase().strip()); 
+			if(fuelType.get(1).equals("JETA") || fuelType.get(1).equals("JETA1") || fuelType.get(1).equals("JETB") || fuelType.get(1).equals("AVGAS")) { 
 				validInput = true;				
 			}
-			else if(fuelType.get(1).equals("done")) {
-				fuelType.remove(1);
-				fuelType.add(1, "N/A");
+			else if(fuelType.get(1).equals("DONE")) {
+				fuelType.set(1, "N/A");
 				validInput = true;
 			}
 			else {
 				fuelType.remove(1);
-				System.out.println("Invalid fuel type!\n");
+				System.out.println("Invalid fuel type!\n"
+						+"| JetA | JetA1 | JetB | AVGAS |\n");
 			}
 		}
 		
@@ -331,27 +332,30 @@ validInput = false;
 		
 		while(!validInput) {
 			System.out.println("Enter a third fuel type: \n"
-					+ "(Type 'done' to finish)");
-			fuelType.add(2, scan.next()); 
-			if(fuelType.get(2).equals("bye") || fuelType.get(2).equals("hi")) { //need to check data dictionary for parameters later...
+					+ "(Type 'done' to skip)");
+			fuelType.add(2, scan.next().toUpperCase()); 
+			if(fuelType.get(2).equals("JETA") || fuelType.get(2).equals("JETA1") || fuelType.get(2).equals("JETB") || fuelType.get(2).equals("AVGAS")) { 
 				validInput = true;				
 			}
-			else if(fuelType.get(2).equals("done")) {
-				fuelType.remove(2);
-				fuelType.add(2, "N/A");
+			else if(fuelType.get(2).equals("DONE")) {
+				fuelType.set(2, "N/A");
 				validInput = true;
 			}
 			else {
 				fuelType.remove(2);
-				System.out.println("Invalid fuel type!\n");
+				System.out.println("Invalid fuel type!\n"
+						+"| JetA | JetA1 | JetB | AVGAS |\n");
 			}
 		}
 		
+		airport.setFuelType(fuelType); 
 		
 		
 		//Airport airport = new Airport(ICAO, name, latitude, longitude, frequency, radioType, fuelType);
-		//airport.Add();
+		System.out.println("Created airport has the following attributes:");
 		airport.displayInfo();
+		//airport.Add();
+		System.out.println("Airport added to file.\n");
 		
 	}
 	

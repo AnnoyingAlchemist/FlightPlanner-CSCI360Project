@@ -138,7 +138,7 @@ public class Airport { //extends Location? maybe?
 		
 		System.out.println("Frequencies: " + frequencyString);
 		System.out.println("Radio Types: " + radioString);
-		System.out.println("Copmatible Fuel Types: " + fuelString);
+		System.out.println("Compatible Fuel Types: " + fuelString);
 		//System.out.println(airport.getBeacons().toString());
 		System.out.println("Runway: " + getRunway());
 	}
