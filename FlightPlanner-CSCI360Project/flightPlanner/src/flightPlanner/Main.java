@@ -195,52 +195,97 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
+			latitude = 912;
+			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter the latitude: \n"
 					+ "(Negative values represent going South)");
-			latitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
-			if(latitude <=90 && latitude >=-90) {
-				validInput = true;
-				airport.setLatitude(latitude);
+			if(dubScan.hasNextDouble()) {
+				latitude = dubScan.nextDouble(); 		
+				if(latitude <=90 && latitude >=-90) {
+					validInput = true;
+					airport.setLatitude(latitude);
+				}
+				else {
+					System.out.println("Latitude must be between -90 to 90 degrees!\n");
+				}
 			}
 			else {
-				System.out.println("Latitude must be between -90 to 90 degrees!\n");
+				System.out.println("latitude must be a number!\n");
 			}
+			
 		}
 		
 		validInput = false;
 		
 		while(!validInput) {
+			longitude = 912;
+			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter the longitude: \n"
 					+ "(Negative values represent going West)");
-			longitude = scan.nextDouble(); //will likely break with string inputs... maybe try-catch would help here?
-			if(longitude <=90 && longitude >=-90) {
-				validInput = true;	
-				airport.setLongitude(longitude);
+			if(dubScan.hasNextDouble()) {
+				longitude = dubScan.nextDouble(); 				
+				if(longitude <=90 && longitude >=-90) {
+					validInput = true;
+					airport.setLongitude(longitude);
+				}
+				else {
+					System.out.println("longitude must be between -90 to 90 degrees!\n");
+				}
 			}
 			else {
-				System.out.println("Longitude must be between -90 to 90 degrees!\n");
+				System.out.println("longitude must be a number!\n");
 			}
+			
 		}
 		
 		validInput = false;
 		
 		while(!validInput) {
+			double temp = 912.0;
+			Scanner dubScan = new Scanner(System.in);
+			System.out.println("Enter a frequency (from 118 to 135.975): ");
+			if(dubScan.hasNextDouble()) {
+				frequency.add(dubScan.nextDouble()); 				
+				if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
+					validInput = true;
+					airport.setFrequency(frequency);
+				}
+				else {
+					frequency.remove(0);
+					System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
+				}
+			}
+			else {
+				System.out.println("Frequency must be a number!\n");
+			}
+			
+		}
+		
+		/*
+		while(!validInput) {
+			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter the frequency: ");
-			frequency.add(scan.nextDouble()); //118 to 135.975
-			if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
-				validInput = true;		
-				airport.setFrequency(frequency);
+			if(dubScan.hasNextDouble()) {
+				frequency.add(scan.nextDouble()); //118 to 135.975
+				if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
+					validInput = true;		
+					airport.setFrequency(frequency);
+				}
+				else {
+					frequency.remove(0);
+					System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
+				}
 			}
 			else {
-				frequency.remove(0);
-				System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
+				System.out.println("frequency must be a number!\n");
 			}
 		}
+		*/
 		
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter a third radio type: \n"
+			System.out.println("Enter a radio type: \n"
 					+ "| VHF | UHF | SHF |");
 			radioType.add(0, scan.next().toUpperCase()); 
 			if(radioType.get(0).equals("VHF") || radioType.get(0).equals("SHF") || radioType.get(0).equals("UHF")) { 
@@ -355,7 +400,7 @@ public class Main {
 		System.out.println("Created airport has the following attributes:");
 		airport.displayInfo();
 		//airport.Add();
-		System.out.println("Airport added to file.\n");
+		System.out.println("\nAirport added to file.\n");
 		
 	}
 	
