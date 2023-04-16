@@ -107,9 +107,8 @@ public class Main {
 						+ "2 - Modify an Airport\r\n"
 						+ "3 - Delete an Airport\r\n"
 						+ "4 - Display all Airports\r\n"
-						+ "5 - Beacons\r\n"
-						+ "6 - Runways\r\n"
-						+ "7 - Back\r\n"
+						+ "5 - Runways\r\n"
+						+ "6 - Back\r\n"
 						+ "----------------------------------------------------------\n");
 	}
 	
@@ -122,8 +121,9 @@ public class Main {
 			String menuOption = scan.nextLine();
 			
 			switch(menuOption){
-				case "1":
-					createAirportLoop(); //System.out.println("Create an Airport"); //replace these print statements with appropriate method calls from Airport Class
+			//replace these print statements with appropriate method calls from Airport/AirportManager Class
+				case "1": //create an airport
+					createAirportLoop(); //System.out.println("Create an Airport"); 
 					break;
 				case "2":
 					System.out.println("Modify an Airport");
@@ -134,13 +134,15 @@ public class Main {
 				case "4":
 					System.out.println("Display all Airports");
 					break;
+					/*
 				case "5":
 					beaconMenuLoop(); //Should lead to a sub-menu. Call beaconMenuLoop()
 					break;
-				case "6":
+					*/
+				case "5":
 					runwayMenuLoop(); //Should lead to a sub-menu. Call runwayMenuLoop()
 					break;
-				case "7":
+				case "6":
 					exitProgram = true;
 					System.out.println("exiting menu...");
 					break;
@@ -394,9 +396,9 @@ public class Main {
 		}
 		
 		airport.setFuelType(fuelType); 
+		System.out.println();
 		
-		
-		//Airport airport = new Airport(ICAO, name, latitude, longitude, frequency, radioType, fuelType);
+		//Airport airport = new Airport(make, name, latitude, longitude, frequency, radioType, fuelType);
 		System.out.println("Created airport has the following attributes:");
 		airport.displayInfo();
 		//airport.Add();
@@ -425,8 +427,9 @@ public class Main {
 			String menuOption = scan.nextLine();
 			
 			switch(menuOption){
+			//replace these print statements with appropriate method calls from Airplane/AirplaneManager Class
 				case "1":
-					System.out.println("Create an Airplane"); //replace these print statements with appropriate method calls from Airplane Class
+					createAirplaneLoop(); 
 					break;
 				case "2":
 					System.out.println("Modify an Airplane");
@@ -447,6 +450,201 @@ public class Main {
 			}
 		}
 	}
+	
+	public static void createAirplaneLoop(){
+		//Should be called anytime you would ask for user input to create an airplane.
+		boolean validInput = false;
+		System.out.println();
+		Scanner scan = new Scanner(System.in); 
+		
+		String make = "";
+		String model = "";
+		Double fuelEfficiency; //in liters per hundred miles
+		Double fuelCapacity; //in liters
+		ArrayList<String> fuelType = new ArrayList<>(); // | jet A | Jet A1 | Jet B | ABGAS |
+		Double airSpeed; //in miles per hour
+		
+		Airplane airplane = new Airplane();
+		
+		while(!validInput) {
+			System.out.println("Enter the make:");
+			make = scan.nextLine();
+			if(make.length() <5 && make.length() >2) {
+				validInput = true;	
+				airplane.setMake(make);
+			}
+			else {
+				System.out.println("make must be between 3-4 characters!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the model:");
+			model = scan.nextLine();
+			if(model.length() <50 && model.length() >0) {
+				validInput = true;
+				airplane.setModel(model);
+			}
+			else {
+				System.out.println("model must be between 0-50 characters!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			fuelEfficiency = 2000.0;
+			Scanner dubScan = new Scanner(System.in);
+			System.out.println("Enter the plane's Fuel Efficiency: \n"
+					+ "(Units are in liters per hundred miles)");
+			if(dubScan.hasNextDouble()) {
+				fuelEfficiency = dubScan.nextDouble(); 		
+				if(fuelEfficiency <=1000 && fuelEfficiency >0) {
+					validInput = true;
+					airplane.setFuelEfficiency(fuelEfficiency);
+				}
+				else if(fuelEfficiency == 0){
+					System.out.println("Fuel Efficiency cannot be 0!\n");
+				}
+				else if(fuelEfficiency < 0){
+					System.out.println("Fuel Efficiency must be positive!\n");
+				}
+				else {
+					System.out.println("Fuel Efficiency must be between 0 and 1000 liters per hundred miles!\n");
+				}
+			}
+			else {
+				System.out.println("Fuel Efficiency must be a number!\n");
+			}
+			
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			fuelCapacity = 2000.0;
+			Scanner dubScan = new Scanner(System.in);
+			System.out.println("Enter the plane's Fuel Capacity: \n"
+					+ "(Units are in liters)");
+			if(dubScan.hasNextDouble()) {
+				fuelCapacity = dubScan.nextDouble(); 		
+				if(fuelCapacity <=100000 && fuelCapacity >0) {
+					validInput = true;
+					airplane.setFuelCapacity(fuelCapacity);
+				}
+				else if(fuelCapacity == 0){
+					System.out.println("Fuel Capacity cannot be 0!\n");
+				}
+				else if(fuelCapacity < 0){
+					System.out.println("Fuel Capacity must be positive!\n");
+				}
+				else {
+					System.out.println("Fuel Capacity must be less than 100,000 liters!\n");
+				}
+			}
+			else {
+				System.out.println("Fuel Capacity must be a number!\n");
+			}
+			
+		}
+
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a fuel type: \n"
+					+"| JetA | JetA1 | JetB | AVGAS |");
+			fuelType.add(0, scan.next().toUpperCase()); 
+			if(fuelType.get(0).equals("JETA") || fuelType.get(0).equals("JETA1") || fuelType.get(0).equals("JETB") || fuelType.get(0).equals("AVGAS")) { 
+				validInput = true;
+			}
+			else {
+				fuelType.remove(0);
+				System.out.println("Invalid fuel type!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a second fuel type: \n"
+					+ "(Type 'done' to skip)");
+			fuelType.add(1, scan.next().toUpperCase().strip()); 
+			if(fuelType.get(1).equals("JETA") || fuelType.get(1).equals("JETA1") || fuelType.get(1).equals("JETB") || fuelType.get(1).equals("AVGAS")) { 
+				validInput = true;				
+			}
+			else if(fuelType.get(1).equals("DONE")) {
+				fuelType.set(1, "N/A");
+				validInput = true;
+			}
+			else {
+				fuelType.remove(1);
+				System.out.println("Invalid fuel type!\n"
+						+"| JetA | JetA1 | JetB | AVGAS |\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter a third fuel type: \n"
+					+ "(Type 'done' to skip)");
+			fuelType.add(2, scan.next().toUpperCase()); 
+			if(fuelType.get(2).equals("JETA") || fuelType.get(2).equals("JETA1") || fuelType.get(2).equals("JETB") || fuelType.get(2).equals("AVGAS")) { 
+				validInput = true;				
+			}
+			else if(fuelType.get(2).equals("DONE")) {
+				fuelType.set(2, "N/A");
+				validInput = true;
+			}
+			else {
+				fuelType.remove(2);
+				System.out.println("Invalid fuel type!\n"
+						+"| JetA | JetA1 | JetB | AVGAS |\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			airSpeed = 2000.0;
+			Scanner dubScan = new Scanner(System.in);
+			System.out.println("Enter the plane's cruising air speed: \n"
+					+ "(Units are in miles per hour)");
+			if(dubScan.hasNextDouble()) {
+				airSpeed = dubScan.nextDouble(); 		
+				if(airSpeed <=100000 && airSpeed >0) {
+					validInput = true;
+					airplane.setAirspeed(airSpeed);
+				}
+				else if(airSpeed == 0){
+					System.out.println("Air Speed cannot be 0!\n");
+				}
+				else if(airSpeed < 0){
+					System.out.println("Air Speed must be positive!\n");
+				}
+				else {
+					System.out.println("Invalid air speed! Maximum air speed is 100,000 miles per hour!\n");
+				}
+			}
+			else {
+				System.out.println("Air Speed must be a number!\n");
+			}
+			
+		}
+		
+		airplane.setFuelType(fuelType); 
+		System.out.println();
+		
+		//airplane airplane = new airplane(make, name, latitude, longitude, frequency, radioType, fuelType);
+		System.out.println("Created Airplane has the following attributes:");
+		airplane.displayInfo();
+		//airplane.Add();
+		System.out.println("\nAirplane added to file.\n");
+		
+	}
+
 	
 	public static void beaconMenu() { 
 		//Display a text menu full of actions that the user can take. ONLY displays the text, has no functional use.
