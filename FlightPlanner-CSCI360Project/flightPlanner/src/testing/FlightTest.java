@@ -6,7 +6,7 @@ public class FlightTest {
 		// TODO Auto-generated method stub
 		Airport air1 = new Airport();
 		air1.setLatitude(0.0);
-		air1.setLongitude(12.0);
+		air1.setLongitude(8.0);
 		Airport air2 = new Airport();
 		air2.setLatitude(0.0);
 		air2.setLongitude(6.0);
@@ -28,7 +28,11 @@ public class FlightTest {
 		//System.out.println("\nBearing Test for [45, 45] , [45, 60]:");
 		
 		double degrees = FlightPlan.findHeading(air1, air2);
-		System.out.println("Calculated heading for [" + air1.getLongitude() + ", "+ air1.getLatitude() + "]" + ", [" + air2.getLongitude() + ", " + air2.getLatitude() + "] = " + degrees + " degrees");
+		System.out.println("Calculated heading for [" + air1.getLongitude() + ", "+ air1.getLatitude() + "]" + ", [" + air2.getLongitude() + ", " + air2.getLatitude() + "] = " + degrees + " degrees\n");
+		
+		//System.out.println(FlightPlan.planFlight(plane, air1, air2));
+		//FlightPlan.planFlight(plane, air1, air2);
+		FlightPlan.planFlight(plane, air1, air2).displayInfo();
 	}
 
 }

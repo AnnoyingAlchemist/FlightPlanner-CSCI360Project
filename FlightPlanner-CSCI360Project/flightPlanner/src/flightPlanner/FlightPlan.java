@@ -1,6 +1,7 @@
 package flightPlanner;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class FlightPlan {
 	private Airport start;
@@ -78,9 +79,19 @@ public class FlightPlan {
 	}
 	
 	//Actual Methods that do stuff
-	public FlightPlan planFlight(Airplane plane, Airport airport1, Airport airport2) {
-		double flightDistance;
+	public static FlightPlan planFlight(Airplane plane, Airport airport1, Airport airport2) {
+		ArrayList<Double> coordinates = new ArrayList<>();
+		ArrayList<ArrayList<Double>> stops = new ArrayList<>();
+		Airport temp = new Airport();
+		
+		coordinates.add(null);
+		coordinates.add(null);
+		
 		FlightPlan plan = new FlightPlan();
+		double heading = findHeading(airport1, airport2);
+		double furthestLat = airport1.getLatitude();
+		double furthestLong = airport1.getLongitude();
+		double slope = (airport2.getLatitude() - airport1.getLatitude())/(airport2.getLongitude() - airport1.getLongitude());
 		//Plans a flight from start to destination, using calculateDistance() and refueling stops.
 		//Step 1: calculate distance from both airports using latitude and longitude.
 		double totalDistance = calculateDistance(airport1, airport2);
@@ -89,20 +100,38 @@ public class FlightPlan {
 		//step 3: Compare the distance in step 2 to step 1. 
 		if(planeDistance >= totalDistance) {
 			//Case 1: The airplane can make the trip. Skip to step 4.
+			plan.setHeading(heading);
 			
 		}
 		else {
-			//Case 2: The airplane cannot make the trip. 
-				//Step 3a: create a refuel stop at the farthest point the airplane can reach, and add it to an array. 
+			int count = 0;
+			while(planeDistance < calculateDistance(temp, airport2) && count <= 5) {
+				count += 1;
+				System.out.println("count: " + count);
+				//Case 2: The airplane cannot make the trip. 
+				//latitude of point = la2 =  asin(sin la1 * cos Ad  + cos la1 * sin Ad * cos theta)
+				furthestLat = Math.asin(Math.sin(airport1.getLatitude()) * Math.cos(totalDistance)  + Math.cos(airport1.getLatitude()) * Math.sin(totalDistance) * Math.cos(heading));
+				//double furthestLong = airport1.getLongitude() + (Math.atan2(Math.sin(heading) * Math.sin(totalDistance) * Math.cos(airport1.getLatitude()) , ()Math.cos(totalDistance) – Math.sin(airport1.getLatitude()) * Math.sin(airport2.getLatitude())));
+				//longitude  of second point = lo2 = lo1 + atan2(sin theta * sin Ad * cos la1 , cos Ad – sin la1 * sin la2)
+				furthestLong = (airport1.getLatitude() + airport1.getLongitude())*slope; //easier way of finding it?
+				System.out.println("calculate distance: " +calculateDistance(furthestLat, furthestLong, airport2.getLatitude(), airport2.getLongitude()));
+					//Step 3a: create a refuel stop at the farthest point the airplane can reach, and add it to an array. 
+				coordinates.set(0, furthestLong);
+				coordinates.set(1, furthestLat);
+				stops.add(coordinates);
+				
+				temp.setLatitude(furthestLat);
+				temp.setLongitude(furthestLong);
 				//Next, repeat step 2, but use the location of the newly created refuel stop as the starting point. 
-				//Repeat until the plane can reach its destination
-				//This process should be done recursively.	
+				//Repeat until the plane can reach its destination	
+			}
 		}
 		//Step 4: Display the results of the flight, and all of the refuel stops created.
+		plan.setRefuelStops(stops);
 		return plan;
 	}
 	
-	public double calculateDistance(double lat1, double long1, double lat2, double long2){
+	public static double calculateDistance(double lat1, double long1, double lat2, double long2){
 		//Calculates distance from two pairs of latitude & longitude coordinates
 		double distance = Math.sqrt(Math.pow((lat2-lat1), 2)+Math.pow((long2-long1), 2));
 		//sqrt[(x2-x1)^2+(y2-y1)^2] = distance between two coordinates
@@ -167,6 +196,18 @@ public class FlightPlan {
 		return numStops;			
 	}
 
+	public void displayInfo() {
+		//System.out.println("Starting Airport: "+ getStart());
+		//System.out.println("Destination: " + getDestination());
+		//System.out.println("Trip Distance: " + getDistance() + " miles");
+		//System.out.println("Heading: " + getHeading() + " degrees");
+	
+		//String refuelString = getRefuelStops().stream().map(Object::toString).collect(Collectors.joining(", "));
+		
+		//System.out.println("Refuel Stops: " + fuelString);
+		System.out.println("Refuel Stops: " + this.getRefuelStops().toString());
+	}
+	
 }
 
 //********
