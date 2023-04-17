@@ -6,7 +6,7 @@ public class FlightTest {
 		// TODO Auto-generated method stub
 		Airport air1 = new Airport();
 		air1.setLatitude(0.0);
-		air1.setLongitude(8.0);
+		air1.setLongitude(10.0);
 		Airport air2 = new Airport();
 		air2.setLatitude(0.0);
 		air2.setLongitude(6.0);
