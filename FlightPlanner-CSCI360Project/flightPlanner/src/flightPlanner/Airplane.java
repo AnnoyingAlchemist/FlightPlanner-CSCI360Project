@@ -53,6 +53,10 @@ public class Airplane {
 		this.airspeed = airspeed;
 	}
 	
+	public double calculateTravelDistance() { //returns units in miles, and assumes plane is filled to capacity.
+		return (this.getFuelCapacity()/this.getFuelEfficiency())*100;
+	}
+	
 	public void displayInfo() {
 		System.out.println("Make: "+ getMake());
 		System.out.println("Model: " + getModel());
