@@ -84,7 +84,6 @@ public class FlightPlan {
 		Airport temp = new Airport();
 		temp.setLatitude(airport1.getLatitude());
 		temp.setLongitude(airport1.getLongitude());
-		
 		coordinates.add(airport1.getLongitude());
 		coordinates.add(airport1.getLatitude());
 		stops.add(coordinates);
@@ -92,6 +91,8 @@ public class FlightPlan {
 		
 		FlightPlan plan = new FlightPlan();
 		plan.setRefuelStops(stops);
+		plan.setStart(airport1);
+		plan.setDestination(airport2);
 		
 		double heading = findHeading(airport1, airport2);
 		double furthestLat = airport1.getLatitude();
@@ -122,7 +123,7 @@ public class FlightPlan {
 				//latitude of point = la2 =  asin(sin la1 * cos Ad  + cos la1 * sin Ad * cos theta)
 				furthestLat = Math.asin(Math.sin(temp.getLatitude()) * Math.cos(planeDistance)  + Math.cos(temp.getLatitude()) * Math.sin(planeDistance) * Math.cos(heading));
 				furthestLong = temp.getLongitude() + (Math.atan2(Math.sin(heading) * Math.sin(planeDistance) * Math.cos(temp.getLatitude()) , Math.cos(planeDistance) - Math.sin(temp.getLatitude()) * Math.sin(airport2.getLatitude())));
-				//longitude  of second point = lo2 = lo1 + atan2(sin theta * sin Ad * cos la1 , cos Ad – sin la1 * sin la2)
+				//longitude  of second point = lo2 = lo1 + atan2(sin theta * sin Ad * cos la1 , cos Ad ï¿½ sin la1 * sin la2)
 				System.out.println("Furthest Longitude: " + furthestLong);
 				System.out.println("Furthest Latitude: " + furthestLat);
 				System.out.println("calculate distance: " + calculateDistance(furthestLat, furthestLong, airport2.getLatitude(), airport2.getLongitude()));
@@ -158,7 +159,7 @@ public class FlightPlan {
 			}
 		}
 		//Step 4: Display the results of the flight, and all of the refuel stops created.
-		System.out.println("stops after exiting loop are: " + coordinates.toString());
+		//System.out.println("stops after exiting loop are: " + coordinates.toString());
 		plan.setHeading(heading);
 		//plan.setRefuelStops(stops);
 		return plan;
@@ -231,8 +232,8 @@ public class FlightPlan {
 	}
 
 	public void displayInfo() {
-		System.out.println("Starting Airport: "+ getStart());
-		System.out.println("Destination: " + getDestination());
+		System.out.println("Starting Airport ICAO: "+ getStart().getICAO());
+		System.out.println("Destination ICAO: " + getDestination().getICAO());
 		System.out.println("Trip Distance: " + getDistance() + " miles");
 		System.out.println("Heading: " + getHeading() + " degrees");
 		System.out.println("Refuel Stops: " + this.getRefuelStops().toString());

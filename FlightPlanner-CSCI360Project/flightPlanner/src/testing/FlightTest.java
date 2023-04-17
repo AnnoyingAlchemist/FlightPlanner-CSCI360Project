@@ -7,9 +7,11 @@ public class FlightTest {
 		Airport air1 = new Airport();
 		air1.setLatitude(0.0);
 		air1.setLongitude(10.0);
+		air1.setICAO("TEST");
 		Airport air2 = new Airport();
 		air2.setLatitude(0.0);
 		air2.setLongitude(6.0);
+		air2.setICAO("HI");
 		
 		FlightPlan flightPlan = new FlightPlan();
 		double distance = flightPlan.calculateDistance(air1, air2);		
@@ -19,12 +21,13 @@ public class FlightTest {
 		Airplane plane = new Airplane();
 		plane.setFuelEfficiency(100.0);
 		plane.setFuelCapacity(100.0);
+		plane.setAirspeed(500.0);
 		
 		System.out.println("Fuel efficiency: " + plane.getFuelEfficiency() + " liters per hundred miles");
 		System.out.println("Fuel capacity: " + plane.getFuelCapacity() + " liters");
 		System.out.println("calculate Distance: " + FlightPlan.calculateDistance(air1, air2) + " miles");
 		
-		System.out.println("Number of Stops needed: " + FlightPlan.findRefuelNumber(plane, air1, air2));
+		//System.out.println("Number of Stops needed: " + FlightPlan.findRefuelNumber(plane, air1, air2));
 		//System.out.println("\nBearing Test for [45, 45] , [45, 60]:");
 		
 		double degrees = FlightPlan.findHeading(air1, air2);
@@ -32,7 +35,9 @@ public class FlightTest {
 		
 		//System.out.println(FlightPlan.planFlight(plane, air1, air2));
 		//FlightPlan.planFlight(plane, air1, air2);
-		FlightPlan.planFlight(plane, air1, air2).displayInfo();
+		FlightPlan plan = FlightPlan.planFlight(plane, air1, air2);
+		plan.displayInfo();
+		System.out.println("Travel Time: " + plan.getDistance()/plane.getAirspeed() + " Hours");
 	}
 
 }
