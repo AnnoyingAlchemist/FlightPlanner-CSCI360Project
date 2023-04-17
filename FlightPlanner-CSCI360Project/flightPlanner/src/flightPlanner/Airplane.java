@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class Airplane {
 	private String make;
 	private String model;
+	private String type;
 	private Double fuelEfficiency; //in liters per hundred miles
 	private Double fuelCapacity; //in liters
 	private ArrayList<String> fuelType; // | 0 = jet A | 1 = Jet A1 | 2 = Jet B | 3 = ABGAS |
@@ -53,6 +54,12 @@ public class Airplane {
 		this.airspeed = airspeed;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public double calculateTravelDistance() { //returns units in miles, and assumes plane is filled to capacity.
 		return (this.getFuelCapacity()/this.getFuelEfficiency())*100;
 	}
@@ -60,6 +67,7 @@ public class Airplane {
 	public void displayInfo() {
 		System.out.println("Make: "+ getMake());
 		System.out.println("Model: " + getModel());
+		System.out.println("Type: " + getType());
 		System.out.println("Fuel Efficiency: " + getFuelEfficiency() + " liters per hundred miles");
 		System.out.println("Fuel Capacity:" + getFuelCapacity() + " liters");
 		

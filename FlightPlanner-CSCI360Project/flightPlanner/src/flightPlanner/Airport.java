@@ -140,6 +140,7 @@ public class Airport { //extends Location? maybe?
 		System.out.println("Radio Types: " + radioString);
 		System.out.println("Compatible Fuel Types: " + fuelString);
 		//System.out.println(airport.getBeacons().toString());
-		System.out.println("Runway: " + getRunway());
+		System.out.println("Runway ID: " + getRunway().getId());
+		System.out.println("Runway Length: " + getRunway().getLength() + " miles");
 	}
 }

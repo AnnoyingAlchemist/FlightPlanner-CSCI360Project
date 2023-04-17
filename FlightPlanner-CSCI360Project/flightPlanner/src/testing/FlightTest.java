@@ -25,6 +25,10 @@ public class FlightTest {
 		System.out.println("calculate Distance: " + FlightPlan.calculateDistance(air1, air2) + " miles");
 		
 		System.out.println("Number of Stops needed: " + FlightPlan.findRefuelNumber(plane, air1, air2));
+		//System.out.println("\nBearing Test for [45, 45] , [45, 60]:");
+		
+		double degrees = FlightPlan.findHeading(air1, air2);
+		System.out.println("Calculated heading for [" + air1.getLongitude() + ", "+ air1.getLatitude() + "]" + ", [" + air2.getLongitude() + ", " + air2.getLatitude() + "] = " + degrees + " degrees");
 	}
 
 }

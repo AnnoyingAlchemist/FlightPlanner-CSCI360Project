@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		/*
 		System.out.println("Created Menus displayed below:\n");
 		airportMenu();
 		airplaneMenu();
 		beaconMenu();
 		runwayMenu();
-		System.out.println("DISCLAIMER: This is not a real Flight Planning System & it should not be used as such."); //Replace with actual disclamer
+		*/
+		System.out.println("THIS SOFTWARE IS NOT TO BE USED FOR FLIGHT PLANNING OR NAVIGATIONAL PURPOSES"); //Replace with actual disclamer
 		boolean validLogin = false;
 		//Ask user for user name and password, and store the answers as variables using a scanner object. 
 		//Continues until a valid login is given.
@@ -52,7 +54,7 @@ public class Main {
 					break;
 				case "4":
 					exitProgram = true;
-					System.out.println("bye bye!");
+					System.out.println("Shutting down...");
 					break;
 				default:
 					System.out.println("Invalid input! Try again.\n");
@@ -395,6 +397,24 @@ public class Main {
 			}
 		}
 		
+		validInput = false;
+		
+		while(!validInput) {
+			String temp = "";
+			System.out.println("Add runway? (y/n): ");
+			temp = scan.next().toLowerCase(); 
+			if(temp.equals("y") || temp.equals("yes")) { 
+				validInput = true;
+				airport.setRunway(createRunwayLoop());
+			}
+			else if(temp.equals("n") || temp.equals("no")){
+				validInput = true;
+			}
+			else{				
+				System.out.println("Invalid input.\n");
+			}
+		}
+		
 		airport.setFuelType(fuelType); 
 		System.out.println();
 		
@@ -459,6 +479,7 @@ public class Main {
 		
 		String make = "";
 		String model = "";
+		String type = "";
 		Double fuelEfficiency; //in liters per hundred miles
 		Double fuelCapacity; //in liters
 		ArrayList<String> fuelType = new ArrayList<>(); // | jet A | Jet A1 | Jet B | ABGAS |
@@ -489,6 +510,20 @@ public class Main {
 			}
 			else {
 				System.out.println("model must be between 0-50 characters!\n");
+			}
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			System.out.println("Enter the type (| Jet | Prop | TurboProp |): ");
+			type = scan.nextLine();
+			if (type.toLowerCase().equals("jet") || type.toLowerCase().equals("prop") || type.toLowerCase().equals("turboprop")) {
+				validInput = true;	
+				airplane.setType(type.toLowerCase());
+			}
+			else {
+				System.out.println("Invalid type!\n");
 			}
 		}
 		
@@ -710,7 +745,7 @@ public class Main {
 			
 			switch(menuOption){
 				case "1":
-					System.out.println("Create a Runway"); //replace these print statements with appropriate method calls from Runway Class
+					createRunwayLoop(); //replace these print statements with appropriate method calls from Runway Class
 					break;
 				case "2":
 					System.out.println("Modify a Runway");
@@ -732,4 +767,58 @@ public class Main {
 		}
 	}
 	
+	public static Runway createRunwayLoop() {
+		boolean validInput = false;
+		double length = 0;
+		String id = "";
+		
+		while(!validInput) {
+			id = "N/A";
+			Scanner scan = new Scanner(System.in);
+			System.out.println("Enter the id of the runway: ");
+				id = scan.nextLine(); 		
+				if((id.length() <= 10) && (id.length() > 0)) {
+					validInput = true;
+				}
+				else if(id.length() == 0) {					
+					System.out.println("ID length cannot be 0!\n");
+				}
+				else {
+					System.out.println("ID length must be under 10 characters!\n");
+				}	
+		}
+		
+		validInput = false;
+		
+		while(!validInput) {
+			length = -1;
+			Scanner dubScan = new Scanner(System.in);
+			System.out.println("Enter the length of the runway: \n"
+					+ "(in miles)");
+			if(dubScan.hasNextDouble()) {
+				length = dubScan.nextDouble(); 		
+				if((length <= 5000) && (length > 0)) {
+					validInput = true;
+				}
+				else if(length == 0) {					
+					System.out.println("Length cannot be 0!\n");
+				}
+				else {
+					System.out.println("Length must be under 5,000 miles!\n");
+				}
+			}
+			else {
+				System.out.println("Length must be a number!\n");
+			}
+			
+		}
+		
+		Runway runway = new Runway((double) length, id);
+		System.out.println("Runway ID: " + runway.getId());
+		System.out.println("Runway length: " + runway.getLength() + " miles");
+		//Runway.Add();
+		System.out.println("Runway added to file successfully.\n");
+		
+		return runway;
+	}
 }

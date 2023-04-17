@@ -1,14 +1,14 @@
 package flightPlanner;
 
 public class Runway {
-	private int length;
+	private double length; // in meters
 	private String id;
 	
-	public int getLength() {
+	public double getLength() {
 		return length;
 	}
 	
-	public void setLength(int length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
 	
@@ -20,9 +20,9 @@ public class Runway {
 		this.id = id;
 	}
 	
-	public Runway(int length, String idNum) {
-		int maxLength = 10;
-		this.id = idNum.substring(0, maxLength);
+	public Runway(double length, String idNum) {
+		//int maxLength = 10;
+		this.id = idNum;
 		
 		if((length > 5000) || (length < 0)) {
 			this.length = 0;

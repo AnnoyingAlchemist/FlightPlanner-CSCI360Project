@@ -6,6 +6,7 @@ public class FlightPlan {
 	private Airport start;
 	private Airport destination;
 	private double distance;
+	private double heading;
 	private ArrayList<ArrayList<Double>> refuelStops;
 	
 	public Airport getStart() {
@@ -36,6 +37,14 @@ public class FlightPlan {
 		this.distance = distance;
 	}
 	
+	public double getHeading() {
+		return heading;
+	}
+
+	public void setHeading(double heading) {
+		this.heading = heading;
+	}
+
 	public void setRefuelStops(ArrayList<ArrayList<Double>> stops) {
 		this.refuelStops = stops;
 	}
@@ -45,9 +54,33 @@ public class FlightPlan {
 		this.refuelStops.add(stop);
 	}
 	
+	public static double findHeading(double long1, double long2, double lat1, double lat2 ) {
+		//returns the heading in degrees 
+		double theta = Math.acos((lat2 - lat1) / Math.sqrt(Math.pow(long2-long1, 2) + Math.pow(lat2-lat1, 2)));
+		double thetaDegree = theta * 180 / Math.PI;
+		//System.out.println("The value of theta is: " + thetaDegree);
+		
+		return thetaDegree;
+	}
+	
+	public static double findHeading(Airport air1, Airport air2) {
+		//returns the heading in degrees 
+		double lat1 = air1.getLatitude();
+		double long1 = air1.getLongitude();
+		double lat2 = air2.getLatitude();
+		double long2 = air2.getLongitude();
+		
+		double theta = Math.acos((lat2 - lat1) / Math.sqrt(Math.pow(long2-long1, 2) + Math.pow(lat2-lat1, 2)));
+		double thetaDegree = theta * 180 / Math.PI;
+		//System.out.println("The value of theta is: " + thetaDegree);
+		
+		return thetaDegree;
+	}
+	
 	//Actual Methods that do stuff
-	public void planFlight(Airplane plane, Airport airport1, Airport airport2) {
+	public FlightPlan planFlight(Airplane plane, Airport airport1, Airport airport2) {
 		double flightDistance;
+		FlightPlan plan = new FlightPlan();
 		//Plans a flight from start to destination, using calculateDistance() and refueling stops.
 		//Step 1: calculate distance from both airports using latitude and longitude.
 		double totalDistance = calculateDistance(airport1, airport2);
@@ -66,6 +99,7 @@ public class FlightPlan {
 				//This process should be done recursively.	
 		}
 		//Step 4: Display the results of the flight, and all of the refuel stops created.
+		return plan;
 	}
 	
 	public double calculateDistance(double lat1, double long1, double lat2, double long2){
