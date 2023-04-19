@@ -1,4 +1,6 @@
 package testing;
+import java.io.IOException;
+
 import flightPlanner.*;
 public class FlightTest {
 
@@ -6,22 +8,24 @@ public class FlightTest {
 		// TODO Auto-generated method stub
 		Airport air1 = new Airport();
 		air1.setLatitude(0.0);
-		air1.setLongitude(10.0);
+		air1.setLongitude(7.0);
 		air1.setICAO("TEST");
 		Airport air2 = new Airport();
 		air2.setLatitude(0.0);
 		air2.setLongitude(6.0);
 		air2.setICAO("HI");
 		
+		
 		FlightPlan flightPlan = new FlightPlan();
-		double distance = flightPlan.calculateDistance(air1, air2);		
-		System.out.println("method returned: " + distance + " miles");
+		//double distance = flightPlan.calculateDistance(air1, air2);		
+		//System.out.println("method returned: " + distance + " miles");
 		//System.out.println("calculated distance: " + distance*69 + " miles");
 		
 		Airplane plane = new Airplane();
 		plane.setFuelEfficiency(100.0);
 		plane.setFuelCapacity(100.0);
 		plane.setAirspeed(500.0);
+		
 		
 		System.out.println("Fuel efficiency: " + plane.getFuelEfficiency() + " liters per hundred miles");
 		System.out.println("Fuel capacity: " + plane.getFuelCapacity() + " liters");

@@ -1,5 +1,7 @@
+package flightPlanner;
 import java.io.*;
 import java.util.*;
+
 public class AirplaneManager{ //import airplane
 	
 	public static void Add() throws IOException {

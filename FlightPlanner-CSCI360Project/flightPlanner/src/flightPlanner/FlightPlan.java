@@ -157,6 +157,7 @@ public class FlightPlan {
 				//Next, repeat step 2, but use the location of the newly created refuel stop as the starting point. 
 				//Repeat until the plane can reach its destination	
 			}
+			System.out.println("number of refuel stops needed: " + count);
 		}
 		//Step 4: Display the results of the flight, and all of the refuel stops created.
 		//System.out.println("stops after exiting loop are: " + coordinates.toString());

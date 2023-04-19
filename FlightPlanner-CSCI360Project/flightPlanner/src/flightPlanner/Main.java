@@ -30,7 +30,7 @@ public class Main {
 				System.out.println("valid login!");
 			}
 			else {
-				System.out.println("Invalid credentials!\n"
+				System.out.println("\nInvalid credentials!\n"
 								+ "Please try again.\n");
 			}
 		}
@@ -85,11 +85,16 @@ public class Main {
 	}
 
 	public static boolean checkLogin(String user, String pass) {
+		if(user.toLowerCase().equals("brandon") && pass.toLowerCase().equals("admin")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 		//Iterate through the AdminUsers.txt file and compare the user name and password given to those in the file
 		//If they match any user name/password combinations in the file, return true. 
 		//If they do not, return false.
 		//Should be called upon startup of the program.
-		return true;
 	}
 	
 	public static void displayMenu() {
@@ -488,14 +493,14 @@ public class Main {
 		Airplane airplane = new Airplane();
 		
 		while(!validInput) {
-			System.out.println("Enter the make:");
+			System.out.println("Enter the make:"); //data validation to make sure it's not a number?
 			make = scan.nextLine();
-			if(make.length() <5 && make.length() >2) {
+			if(make.length() <=50 && make.length() >=1) {
 				validInput = true;	
 				airplane.setMake(make);
 			}
 			else {
-				System.out.println("make must be between 3-4 characters!\n");
+				System.out.println("make must be between 1-50 characters!\n");
 			}
 		}
 		
