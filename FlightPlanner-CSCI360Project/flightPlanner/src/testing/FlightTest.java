@@ -7,12 +7,12 @@ public class FlightTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Airport air1 = new Airport();
+		air1.setLongitude(6.0);
 		air1.setLatitude(0.0);
-		air1.setLongitude(7.0);
 		air1.setICAO("TEST");
 		Airport air2 = new Airport();
-		air2.setLatitude(0.0);
-		air2.setLongitude(6.0);
+		air2.setLongitude(7.0);
+		air2.setLatitude(10.0);
 		air2.setICAO("HI");
 		
 		
@@ -22,13 +22,14 @@ public class FlightTest {
 		//System.out.println("calculated distance: " + distance*69 + " miles");
 		
 		Airplane plane = new Airplane();
-		plane.setFuelEfficiency(100.0);
-		plane.setFuelCapacity(100.0);
+		plane.setFuelEfficiency(1000000000.0);
+		plane.setFuelCapacity(1.0);
 		plane.setAirspeed(500.0);
 		
 		
 		System.out.println("Fuel efficiency: " + plane.getFuelEfficiency() + " liters per hundred miles");
 		System.out.println("Fuel capacity: " + plane.getFuelCapacity() + " liters");
+		System.out.println("calculate Plane max travel Distance: " + plane.calculateTravelDistance() + " miles");
 		System.out.println("calculate Distance: " + FlightPlan.calculateDistance(air1, air2) + " miles");
 		
 		//System.out.println("Number of Stops needed: " + FlightPlan.findRefuelNumber(plane, air1, air2));

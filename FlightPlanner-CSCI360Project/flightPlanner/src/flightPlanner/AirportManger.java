@@ -183,9 +183,11 @@ public class AirportManger extends Airplane { //import airports
 		// Numbers 1 - 5 will call each method.
 		//For example: User will input 1 to add airplane or 4 to Search the database.
 	}
-}
+
 	
-	/*Methods for runway information
+	/*
+	 * Methods for runway information
+	 */
 	public static void RAdd() throws IOException {
 		//Allows user to create a runway and fill out attributes.
 		//Information will be saved to airport.txt file.
@@ -207,4 +209,5 @@ public class AirportManger extends Airplane { //import airports
 		//Will display list of all runways.
 	}
 
-} *\
+} 
+
