@@ -98,9 +98,11 @@ public class Main {
 						+ "----------------------------------------------------------\n");
 	}
 	
-	public static void airportMenuLoop() { //For use in the main method when user chooses a menu option related to airports
+	public static void airportMenuLoop() throws IOException { //For use in the main method when user chooses a menu option related to airports
 		boolean exitProgram = false;
 		while(!exitProgram) {	
+			AirportManager airManager = new AirportManager();
+			AirplaneManager planeManager = new AirplaneManager();
 			airportMenu();
 			Scanner scan = new Scanner(System.in);  
 			System.out.println("Menu option:");
@@ -112,13 +114,18 @@ public class Main {
 					createAirportLoop(); //System.out.println("Create an Airport"); 
 					break;
 				case "2":
-					System.out.println("Modify an Airport");
+					int index = chooseAirportLoop();
+					System.out.println("Choose attribute type to modify: ");
+					String attribute = scan.nextLine();
+					System.out.println("Type the replacement value: ");
+					String value = scan.nextLine();
+					airManager.Modify(index, attribute, value);
 					break;
 				case "3":
-					System.out.println("Delete an Airport");
+					airManager.Delete(chooseAirportLoop());
 					break;
 				case "4":
-					System.out.println("Display all Airports");
+					AirportManager.Display();
 					break;
 				case "5":
 					runwayMenuLoop(); //Should lead to a sub-menu. Call runwayMenuLoop()
@@ -134,11 +141,56 @@ public class Main {
 		}
 	}
 	
-	public static void chooseAirportLoop() {
+	public static int chooseAirportLoop() throws IOException {
 		boolean validInput = false;
-		//DisplayAirports() <----- Method call from AirportManager class to displayy all airports in a file
-		//Idea right now is to have this method call also add all airports in a file to an ArrayList<Airport> and have a user select an aiport based on that 
-		//Alternate Idea: Use Search() and have the user search for an airport based on ICAO. Would need to make sure that duplicate ICAOS don't exist. Could be handled in createAirportLoop().
+		int index = -1;
+		AirportManager airManager = new AirportManager();
+		Airport airport = new Airport();
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			AirportManager.Display();
+			System.out.println("Type index of airport (as shown on list):");
+			if(scan.hasNextInt()) {
+				index = scan.nextInt() - 1;
+				if(airManager.getAirports().size() > index && index >=0) {
+					airport = airManager.getAirports().get(index);
+					validInput = true;
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
+		}
+		return index;
+	}
+	
+	public static int chooseAirplaneLoop() throws IOException {
+		boolean validInput = false;
+		int index = -1;
+		AirplaneManager airplaneManager = new AirplaneManager();
+		Airplane airplane = new Airplane();
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			airplaneManager.Display();
+			System.out.println("Type index of airplane (as shown on list):");
+			if(scan.hasNextInt()) {
+				index = scan.nextInt() - 1;
+				if(airplaneManager.getPlanes().size() > index && index >=0) {
+					airplane = airplaneManager.getPlanes().get(index);
+					validInput = true;
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
+		}
+		return index;
 	}
 	
 	public static void createAirportLoop(){
@@ -361,31 +413,21 @@ public class Main {
 		}
 		
 		validInput = false;
-		/*
-		while(!validInput) {
-			String temp = "";
-			System.out.println("Add runway? (y/n): ");
-			temp = scan.next().toLowerCase(); 
-			if(temp.equals("y") || temp.equals("yes")) { 
-				validInput = true;
-				airport.setRunway(createRunwayLoop());
-			}
-			else if(temp.equals("n") || temp.equals("no")){
-				validInput = true;
-			}
-			else{				
-				System.out.println("Invalid input.\n");
-			}
-		}
-		*/
+
 		airport.setFuelType(fuelType); 
 		System.out.println();
 		
 		//Airport airport = new Airport(make, name, latitude, longitude, frequency, radioType, fuelType);
 		System.out.println("Created airport has the following attributes:");
 		airport.displayInfo();
-		//airport.Add();
-		System.out.println("\nAirport added to file.\n");
+		try {
+			AirportManager.Add(airport);
+			System.out.println("\nAirport added to file.\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("\nERROR: Airport cannot be added to file.\n");
+			e.printStackTrace();
+		}
 		
 	}
 	

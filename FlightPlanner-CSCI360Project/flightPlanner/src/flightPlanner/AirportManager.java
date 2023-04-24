@@ -87,19 +87,22 @@ public class AirportManager{ //import airports
 			case "icao":
 				this.getAirports().get(index).setICAO(value);
 				this.overwriteFile();
+				System.out.println("Modified Succesfully.\n");
 				break;
 			case "name":
 				this.getAirports().get(index).setName(value);
 				this.overwriteFile();
+				System.out.println("Modified Succesfully.\n");
 				break;
 			case "latitude":
 				try {
 					this.getAirports().get(index).setLatitude(Double.parseDouble(value));
 					this.overwriteFile();
+					System.out.println("Modified Succesfully.\n");
 					break;
 					}
 					catch(NumberFormatException e){
-						System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+						System.out.println("Invalid request!");
 						e.printStackTrace();
 						break;
 					}
@@ -107,10 +110,11 @@ public class AirportManager{ //import airports
 				try {
 					this.getAirports().get(index).setLongitude(Double.parseDouble(value));
 					this.overwriteFile();
+					System.out.println("Modified Succesfully.\n");
 					break;
 				}
 				catch(NumberFormatException e){
-					System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+					System.out.println("Invalid request!");
 					e.printStackTrace();
 					break;
 				}
@@ -118,15 +122,16 @@ public class AirportManager{ //import airports
 				try {
 					this.getAirports().get(index).setFrequency(Double.parseDouble(value));
 					this.overwriteFile();
+					System.out.println("Modified Succesfully.\n");
 					break;
 				}
 				catch(NumberFormatException e){
-					System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+					System.out.println("Invalid request!");
 					e.printStackTrace();
 					break;
 				}
 			default:
-				System.out.println("invalid request");
+				System.out.println("Invalid request!");
 				break;
 			}
 	}
