@@ -447,6 +447,7 @@ public class Main {
 		boolean exitProgram = false;
 		while(!exitProgram) {	
 			airplaneMenu();
+			AirplaneManager planeManager = new AirplaneManager();
 			Scanner scan = new Scanner(System.in);  
 			System.out.println("Menu option:");
 			String menuOption = scan.nextLine();
@@ -456,14 +457,41 @@ public class Main {
 				case "1":
 					createAirplaneLoop(); 
 					break;
-				case "2":
-					System.out.println("Modify an Airplane");
-					break;
-				case "3":
-					System.out.println("Delete an Airplane");
-					break;
-				case "4":
-					System.out.println("Display all Airplanes");
+				case "2": //Modify
+					int index = 0;
+					try {
+						index = chooseAirplaneLoop();
+					} catch (IOException e1) {
+						System.out.println("File may be missing.");
+						e1.printStackTrace();
+					}
+						System.out.println("Choose attribute type to modify: ");
+						String attribute = scan.nextLine();
+						System.out.println("Type the replacement value: ");
+						String value = scan.nextLine();
+					try {
+						planeManager.Modify(index, attribute, value);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+						break;
+				case "3": //Delete
+					try {
+						planeManager.Delete(chooseAirplaneLoop());
+					} catch (IOException e) {
+						System.out.println("File may be missing.");
+						e.printStackTrace();
+					}
+						break;
+				case "4": //Display
+				try {
+					AirplaneManager.Display();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("File may be missing.");
+					e.printStackTrace();
+				}
 					break;
 				case "5":
 					exitProgram = true;
