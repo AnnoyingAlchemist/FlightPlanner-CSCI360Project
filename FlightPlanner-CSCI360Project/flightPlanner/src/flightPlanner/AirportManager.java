@@ -152,6 +152,7 @@ public class AirportManager{ //import airports
 				return true;
 			}
 		}
+			System.out.println("Airport not found.");
 			return false;
 	}
 
@@ -229,31 +230,6 @@ public class AirportManager{ //import airports
 		//Search();
 		//manager.Modify(0, "icao", "BEES");
 		Display();
-	}
-
-	
-	/*
-	 * Methods for runway information
-	 */
-	public static void RAdd() throws IOException {
-		//Allows user to create a runway and fill out attributes.
-		//Information will be saved to airport.txt file.
-		//Information is inputed by user using scanner,
-	}
-	public static void RModify() throws IOException{
-		//Will locate runway and allow user to change information.
-		//New information will be appended to list and old work will be deleted.
-	}
-	public static void RDelete() throws IOException{
-		//Information will be searched and once found deleted from file.
-	}
-	public static void RSearch() throws IOException{
-		//If the runway exists information will be displayed
-		// If not message will be displayed to user.
-		
-	}
-	public static void RDisplay() throws IOException{
-		//Will display list of all runways.
 	}
 
 } 

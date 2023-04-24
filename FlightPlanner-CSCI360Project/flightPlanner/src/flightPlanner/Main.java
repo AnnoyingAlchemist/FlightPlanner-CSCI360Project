@@ -93,8 +93,9 @@ public class Main {
 						+ "2 - Modify an Airport\r\n"
 						+ "3 - Delete an Airport\r\n"
 						+ "4 - Display all Airports\r\n"
-						+ "5 - Runways\r\n"
-						+ "6 - Back\r\n"
+						+ "5 - Search for an airport\r\n"
+						+ "6 - Runways\r\n"
+						+ "7 - Back\r\n"
 						+ "----------------------------------------------------------\n");
 	}
 	
@@ -128,9 +129,24 @@ public class Main {
 					AirportManager.Display();
 					break;
 				case "5":
-					runwayMenuLoop(); //Should lead to a sub-menu. Call runwayMenuLoop()
+					boolean validInput = false;
+					String ICAO = "";
+					while(!validInput) {
+						System.out.println("Enter the ICAO:");
+						ICAO = scan.nextLine();
+						if(ICAO.length() <5 && ICAO.length() >2) {
+							validInput = true;	
+						}
+						else {
+							System.out.println("ICAO must be between 3-4 characters!\n");
+						}
+					}
+					airManager.Search(ICAO); 
 					break;
 				case "6":
+					runwayMenuLoop(); //Should lead to a sub-menu. Call runwayMenuLoop()
+					break;
+				case "7":
 					exitProgram = true;
 					System.out.println("exiting menu...");
 					break;
@@ -439,7 +455,8 @@ public class Main {
 				+ "2 - Modify an Airplane\r\n"
 				+ "3 - Delete an Airplane\r\n"
 				+ "4 - Display all Airplanes\r\n"
-				+ "5 - Back\r\n"
+				+ "5 - Search for an Airplane\r\n"
+				+ "6 - Back\r\n"
 				+ "----------------------------------------------------------\n");
 	}
 	
@@ -493,7 +510,65 @@ public class Main {
 					e.printStackTrace();
 				}
 					break;
-				case "5":
+				case "5"://Search
+					String make = "";
+					String model = "";
+					Boolean validInput = false;
+					while(!validInput) {
+						boolean isNumber = true;
+						System.out.println("Enter the make:"); //data validation to make sure it's not a number?
+						make = scan.nextLine();
+						if(make.length() <=30 && make.length() >=1) {
+							try {
+					            Double num = Double.parseDouble(make);
+					        } catch (NumberFormatException e) {
+					            isNumber = false;
+					        }
+						}
+						if(make.length() <=30 && make.length() >=1 && !isNumber) {
+							validInput = true;	
+						}
+						else if(isNumber) {
+							System.out.println("Make cannot be only numbers!");
+						}
+						else {
+							System.out.println("make must be between 1-30 characters!\n");
+						}
+					}
+					
+					
+					validInput = false;
+					
+					while(!validInput) {
+						boolean isNumber = true;
+						System.out.println("Enter the model:"); //data validation to model sure it's not a number?
+						model = scan.nextLine();
+						if(model.length() <=30 && model.length() >=1) {
+							try {
+					            Double num = Double.parseDouble(model);
+					        } catch (NumberFormatException e) {
+					            isNumber = false;
+					        }
+						}
+						if(model.length() <=30 && model.length() >=1 && !isNumber) {
+							validInput = true;	
+						}
+						else if(isNumber) {
+							System.out.println("model cannot be only numbers!");
+						}
+						else {
+							System.out.println("model must be between 1-30 characters!\n");
+						}
+					}
+					
+					try {
+						planeManager.Search(make, model);
+					} catch (IOException e) {
+						System.out.println("File may be missing.");
+						e.printStackTrace();
+					}
+					break;
+				case "6":
 					exitProgram = true;
 					System.out.println("exiting menu...");
 					break;

@@ -1,2 +1,2 @@
-rad,bad,jet,45.0,56.0,AVGAS,JETB,JETA,56.0
-make,model,prop,600.0,10000.0,AVGAS,JETB,JETA,768.0
+rad,bad,jet,45.0,56.0,JETA,N/A,AVGAS,56.0
+Boeing,740-7,jet,5.0,67.0,JETA,N/A,AVGAS,670.0
