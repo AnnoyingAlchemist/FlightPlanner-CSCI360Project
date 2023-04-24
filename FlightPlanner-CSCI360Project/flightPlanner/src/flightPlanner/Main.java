@@ -44,7 +44,7 @@ public class Main {
 			
 			switch(menuOption){
 				case "1":
-					System.out.println("Plan a flight!"); //Replace with appropriate method call 
+					planFlightLoop(); //Replace with appropriate method call 
 					break;
 				case "2":
 					airportMenuLoop();
@@ -710,7 +710,7 @@ public class Main {
 		}
 	}
 
-public static void runwayMenu() {
+	public static void runwayMenu() {
 		System.out.println("----------------------------------------------------------\r\n"
 				+ "1 - Create a Runway\r\n"
 				+ "2 - Modify a Runway\r\n"
@@ -805,5 +805,22 @@ public static void runwayMenu() {
 		System.out.println("Runway added to file successfully.\n");
 		
 		return runway;
+	}
+	
+	public static void planFlightLoop() {
+		boolean validInput = false;
+		FlightPlan plan = new FlightPlan();
+		try {
+			AirportManager.Display();
+		} catch (IOException e) {
+			System.out.println("Something went wrong and file cannot be found!");
+			e.printStackTrace();
+		}
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			System.out.println("Menu option:");
+			String menuOption = scan.nextLine();
+			System.out.println("");
+		}
 	}
 }

@@ -79,7 +79,7 @@ public class Airplane {
 		System.out.println("Model: " + getModel());
 		System.out.println("Type: " + getType());
 		System.out.println("Fuel Efficiency: " + getFuelEfficiency() + " liters per hundred miles");
-		System.out.println("Fuel Capacity:" + getFuelCapacity() + " liters");
+		System.out.println("Fuel Capacity: " + getFuelCapacity() + " liters");
 		
 		String fuelString = getFuelType().stream().map(Object::toString).collect(Collectors.joining(", "));
 		

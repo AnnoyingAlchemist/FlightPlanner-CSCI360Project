@@ -11,6 +11,16 @@ public class FlightPlan {
 	private double heading;
 	private ArrayList<ArrayList<Double>> refuelStops;
 	
+	public FlightPlan(){
+		start = new Airport();
+		destination = new Airport();
+		plane = new Airplane();
+		distance = 0;
+		heading = 0;
+		ArrayList<ArrayList<Double>> stops = new ArrayList<>();
+		refuelStops = stops;
+	}
+	
 	public Airport getStart() {
 		return this.start;
 	}

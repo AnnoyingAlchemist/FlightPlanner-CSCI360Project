@@ -2,8 +2,56 @@ package flightPlanner;
 
 import java.io.*;
 import java.util.*;
-public class AirportManger extends Airplane { //import airports
+public class AirportManager{ //import airports
+	private ArrayList<Airport> airports;
 	
+	public ArrayList<Airport> getAirports() {
+		return this.airports;
+	}
+	public void setAirports(ArrayList<Airport> airportList) {
+		this.airports = airportList;
+	}
+	
+	public AirportManager() {
+		Scanner read;
+		ArrayList<Airplane> planeList = new ArrayList<Airplane>(); 
+		ArrayList<String> fuelType = new ArrayList<String>();
+		fuelType.add("N/A");
+		fuelType.add("N/A");
+		fuelType.add("N/A");
+		airports = planeList;
+		try {
+			read = new Scanner (new File("src/airplanes.txt"));
+			read.useDelimiter(",|\n");
+
+			while(read.hasNext()) {
+				Airplane tempPlane = new Airplane();
+				tempPlane.setMake(read.next());
+				tempPlane.setModel(read.next());
+				tempPlane.setType(read.next());
+				tempPlane.setFuelEfficiency(Double.parseDouble(read.next()));
+				tempPlane.setFuelCapacity(Double.parseDouble(read.next()));
+				//fuelCapacity = read.next();
+				fuelType.set(0, read.next());
+				fuelType.set(1, read.next());
+				fuelType.set(2, read.next());
+				tempPlane.setFuelType(fuelType);
+				tempPlane.setAirspeed(Double.parseDouble(read.next()));
+				
+				//System.out.println("Plane #" + count + ":");
+				//tempPlane.displayInfo();
+				//System.out.println();
+				airports.add(tempPlane);
+				//fuelType.clear();
+			}
+			
+			read.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File doesn't exist!");
+			e.printStackTrace();
+		}	
+	}
 	
 	public static void Add(Airport airport) throws IOException {
 			//

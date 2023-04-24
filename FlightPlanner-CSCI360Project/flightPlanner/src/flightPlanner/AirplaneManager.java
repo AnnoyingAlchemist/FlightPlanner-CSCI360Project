@@ -2,7 +2,7 @@ package flightPlanner;
 import java.io.*;
 import java.util.*;
 
-public class AirplaneManager extends Airplane{ //import airplane
+public class AirplaneManager{ //import airplane
 	private ArrayList<Airplane> planes;
 	
 	public ArrayList<Airplane> getPlanes() {
@@ -15,48 +15,35 @@ public class AirplaneManager extends Airplane{ //import airplane
 
 	public AirplaneManager() {
 		Scanner read;
+		ArrayList<Airplane> planeList = new ArrayList<Airplane>(); 
+		ArrayList<String> fuelType = new ArrayList<String>();
+		fuelType.add("N/A");
+		fuelType.add("N/A");
+		fuelType.add("N/A");
+		planes = planeList;
 		try {
 			read = new Scanner (new File("src/airplanes.txt"));
-			read.useDelimiter(",");
-			
-			String make, model, type;
-			double fuelEfficiency, fuelCapacity, airSpeed;
-			ArrayList<String> fuelType = new ArrayList<String>();
-			
+			read.useDelimiter(",|\n");
+
 			while(read.hasNext()) {
-				make = read.next();
-				model = read.next();
-				type = read.next();
-				try {
-					fuelEfficiency = Double.parseDouble(read.next());
-				}
-				catch(NumberFormatException e) {
-					System.out.println("Something went wrong reading fuelEfficiency. fuelEfficiency has been set to 1.");
-					read.next();
-					fuelEfficiency = 1.0;
-				}
-				try {
-					fuelCapacity = Double.parseDouble(read.next());
-				}
-				catch(NumberFormatException e) {
-					System.out.println("Something went wrong reading fuelCapacity. fuelCapacity has been set to 1.");
-					read.next();
-					fuelCapacity = 1.0;
-				}
+				Airplane tempPlane = new Airplane();
+				tempPlane.setMake(read.next());
+				tempPlane.setModel(read.next());
+				tempPlane.setType(read.next());
+				tempPlane.setFuelEfficiency(Double.parseDouble(read.next()));
+				tempPlane.setFuelCapacity(Double.parseDouble(read.next()));
+				//fuelCapacity = read.next();
+				fuelType.set(0, read.next());
+				fuelType.set(1, read.next());
+				fuelType.set(2, read.next());
+				tempPlane.setFuelType(fuelType);
+				tempPlane.setAirspeed(Double.parseDouble(read.next()));
 				
-				fuelType.add(read.next());
-				fuelType.add(read.next());
-				fuelType.add(read.next());
-				
-				try {
-					airSpeed = Double.parseDouble(read.next());
-				}
-				catch(NumberFormatException e) {
-					System.out.println("Something went wrong reading air speed. air speed has been set to 1.");
-					read.next();
-					airSpeed = 1.0;
-				}
-				System.out.println(make + model + type + fuelEfficiency + fuelCapacity + fuelType.toString() + airSpeed);
+				//System.out.println("Plane #" + count + ":");
+				//tempPlane.displayInfo();
+				//System.out.println();
+				planes.add(tempPlane);
+				//fuelType.clear();
 			}
 			
 			read.close();
@@ -64,7 +51,7 @@ public class AirplaneManager extends Airplane{ //import airplane
 			// TODO Auto-generated catch block
 			System.out.println("File doesn't exist!");
 			e.printStackTrace();
-		}
+		}	
 	}
 	
 	public static void Add(Airplane plane) throws IOException {
@@ -83,24 +70,93 @@ public class AirplaneManager extends Airplane{ //import airplane
 		+ "\n");
 		writer.close();
 	}
-	public static void Modify(Airplane plane) throws IOException{
-		FileReader reader = new FileReader("src/airplanes.txt");
-		reader.close();
+	
+	public void Modify(int index, String attribute, String value) throws IOException{ //Should only be called on an instance of AirplaneManager class.
+		//ArrayList<Airplane> tempList = new ArrayList<Airplane>();
+		//Airplane tempPlane = new Airplane();
+		switch(attribute.toLowerCase().strip()) {
+		case "make":
+			this.getPlanes().get(index).setMake(value);
+			this.overwriteFile();
+			break;
+		case "model":
+			this.getPlanes().get(index).setModel(value);
+			this.overwriteFile();
+			break;
+		case "type":
+			this.getPlanes().get(index).setType(value);
+			this.overwriteFile();
+			break;
+		case "fuelefficiency":
+			try {
+			this.getPlanes().get(index).setFuelEfficiency(Double.parseDouble(value));
+			this.overwriteFile();
+			break;
+			}
+			catch(NumberFormatException e){
+				System.out.println("Something has gone horribly wrong with Modify() for Airplane!");
+				e.printStackTrace();
+				break;
+			}
+		case "fuelcapacity":
+			try {
+				this.getPlanes().get(index).setFuelCapacity(Double.parseDouble(value));
+				this.overwriteFile();
+				break;
+				}
+				catch(NumberFormatException e){
+					System.out.println("Something has gone horribly wrong with Modify() for Airplane!");
+					e.printStackTrace();
+					break;
+				}
+		case "airspeed":
+			try {
+				this.getPlanes().get(index).setAirspeed(Double.parseDouble(value));
+				this.overwriteFile();
+				break;
+				}
+				catch(NumberFormatException e){
+					System.out.println("Something has gone horribly wrong with Modify() for Airplane!");
+					e.printStackTrace();
+					break;
+				}
+		default:
+			System.out.println("invalid request");
+			break;
+		}
 		//Will locate airport and allow user to change information.
 		//New information will be appended to list and old work will be deleted.
 	}
 	
-	public static void Delete(String make) throws IOException{
-		Scanner read = new Scanner (new File("src/airplanes.txt"));
-		read.useDelimiter(",");
-		read.close();
+	public void ModifyFuelType(int index, int fuelIndex, String value) throws IOException{
+
+			try {
+				this.getPlanes().get(index).getFuelType().set(fuelIndex, value);
+				this.overwriteFile();				
+			}
+			catch(NumberFormatException e){
+				System.out.println("Something has gone horribly wrong with Modify() for Airplane!");
+				e.printStackTrace();	
+			}
+
 	}
 	
-	public static boolean Search(String something) throws IOException{
+	public void Delete(int index) throws IOException{
+		this.getPlanes().remove(index);
+		this.overwriteFile();
+	}
+	
+	public boolean Search(String make, String model) throws IOException{
 		//If the airport exists information will be displayed
 		// If not message will be displayed to user.
-		FileReader reader = new FileReader("src/airplanes.txt");
-		reader.close();
+		for(Airplane airplane: this.getPlanes()) {
+			if(airplane.getMake().toLowerCase().equals(make.toLowerCase()) && airplane.getModel().toLowerCase().equals(model.toLowerCase())) {
+				System.out.println("Airport found! Displaying info...\n");
+				airplane.displayInfo();
+				return true;
+			}
+		}
+		System.out.println("Airplane not found");
 		return false;
 	}
 
@@ -136,59 +192,41 @@ public class AirplaneManager extends Airplane{ //import airplane
 			e.printStackTrace();
 		}
     }
-	/*
-	public static void Display() throws IOException{
-		Scanner read;
-		try {
-			read = new Scanner (new File("src/airplanes.txt"));
-			read.useDelimiter(",");
-			
-			String make = "", model = "", type = "", fuelEfficiency = "", fuelCapacity = "", airSpeed = "";
-			ArrayList<String> fuelType = new ArrayList<String>();
-			
-			while(read.hasNext()) {
-				make = read.next();
-				if(read.hasNext()) {
-					model = read.next();
-					
-				}
-				if(read.hasNext()) {
-					type = read.next();
-					
-				}
-				if(read.hasNext()) {
-					fuelEfficiency = read.next();
-					
-				}
-				if(read.hasNext()) {
-					fuelCapacity = read.next();
-					
-				}
-				if(read.hasNext()) {
-					airSpeed = read.next();
-					
-				}
-				if(read.hasNext()) {
-					
-				}
-				System.out.println(make + "\n" + model + "\n" + type + "\n" + fuelEfficiency + "\n" + fuelCapacity + "\n" + fuelType.toString() + "\n" + airSpeed);
-			}
-			
-			read.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("File doesn't exist!");
-			e.printStackTrace();
+	
+	public void overwriteFile() throws IOException { //Should only be called on an instance of AirplaneManager class.
+		//Completely overwrites airplanes.txt with a new file based on the manager object this is called on AS SOON AS IT IS CALLED. 
+		//BE VERY CAREFUL WITH THIS!
+		AirplaneManager manage = new AirplaneManager();
+		manage.setPlanes(this.getPlanes());
+		
+		FileWriter writer = new FileWriter("src/airplanes.txt");
+		for(Airplane airplane: manage.getPlanes()) {
+			writer.append(
+			airplane.getMake() + "," 
+			+ airplane.getModel() + ","
+			+ airplane.getType() + "," 
+			+ airplane.getFuelEfficiency() + "," 
+			+ airplane.getFuelCapacity() + ","
+			+ airplane.getFuelType().get(0) + "," 
+			+ airplane.getFuelType().get(1) + "," 
+			+ airplane.getFuelType().get(2) + ","
+			+ airplane.getAirspeed() 
+			+ "\n");
 		}
-    }
-	*/
+		writer.close();
+	}
+
 	public static void main(String[] args) throws IOException {
 		Airplane plane = new Airplane();
+		AirplaneManager manage = new AirplaneManager();
+		//System.out.println("SIZE: " +manage.getPlanes().size());
+		//manage.getPlanes().get(0).displayInfo();
 		//System.out.println(plane.getFuelType().get(0).toString());
 		//Add(plane);
-		//Modify(plane);
+		//manage.Modify(1, "make", "IT WORKS!!!!");
+		//manage.Delete(0);
 		Display();
-		//Search();
+		manage.Search("rad", "bad");
 		//Delete();
 		//Display();
 	}
