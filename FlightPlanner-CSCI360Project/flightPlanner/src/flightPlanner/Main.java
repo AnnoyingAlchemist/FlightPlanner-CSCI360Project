@@ -160,6 +160,13 @@ public class Main {
 		}
 	}
 	
+	public static void chooseAirportLoop() {
+		boolean validInput = false;
+		//DisplayAirports() <----- Method call from AirportManager class to displayy all airports in a file
+		//Idea right now is to have this method call also add all airports in a file to an ArrayList<Airport> and have a user select an aiport based on that 
+		//Alternate Idea: Use Search() and have the user search for an airport based on ICAO. Would need to make sure that duplicate ICAOS don't exist. Could be handled in createAirportLoop().
+	}
+	
 	public static void createAirportLoop(){
 		//Should be called anytime you would ask for user input to create an airport.
 		boolean validInput = false;

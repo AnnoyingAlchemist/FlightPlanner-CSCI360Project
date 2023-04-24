@@ -1,6 +1,6 @@
 package flightPlanner;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Airplane {
@@ -11,6 +11,16 @@ public class Airplane {
 	private Double fuelCapacity; //in liters
 	private ArrayList<String> fuelType; // | 0 = jet A | 1 = Jet A1 | 2 = Jet B | 3 = ABGAS |
 	private Double airspeed; //in miles per hour
+	
+	public Airplane() {
+		make = "N/A";               
+		model = "N/A";              
+		type = "N/A";               
+		fuelEfficiency = 1.0; 
+		fuelCapacity = 1.0; 
+		fuelType = new ArrayList<>(Arrays.asList("N/A", "N/A", "N/A"));
+		airspeed = 1.0; 
+	}
 	
 	public String getMake() {
 		return make;

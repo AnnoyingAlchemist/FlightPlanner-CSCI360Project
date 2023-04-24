@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class FlightPlan {
 	private Airport start;
 	private Airport destination;
+	private Airplane plane;
 	private double distance;
 	private double heading;
 	private ArrayList<ArrayList<Double>> refuelStops;
@@ -18,6 +19,14 @@ public class FlightPlan {
 		return this.destination;
 	}
 	
+	public Airplane getPlane() {
+		return plane;
+	}
+
+	public void setPlane(Airplane plane) {
+		this.plane = plane;
+	}
+
 	public double getDistance() {
 		return this.distance;
 	}
@@ -56,9 +65,13 @@ public class FlightPlan {
 	}
 	
 	public static double findHeading(double long1, double long2, double lat1, double lat2 ) {
+		//treat latitude as 'Y' value and longitude as 'X' value
 		//returns the heading in degrees 
 		double theta = Math.acos((lat2 - lat1) / Math.sqrt(Math.pow(long2-long1, 2) + Math.pow(lat2-lat1, 2)));
 		double thetaDegree = theta * 180 / Math.PI;
+		if(long1 > long2) {
+			return 360 - thetaDegree;
+		}
 		//System.out.println("The value of theta is: " + thetaDegree);
 		
 		return thetaDegree;
@@ -74,8 +87,15 @@ public class FlightPlan {
 		double theta = Math.acos((lat2 - lat1) / Math.sqrt(Math.pow(long2-long1, 2) + Math.pow(lat2-lat1, 2)));
 		double thetaDegree = theta * 180 / Math.PI;
 		//System.out.println("The value of theta is: " + thetaDegree);
+		if(long1 > long2) {
+			return 360 - thetaDegree;
+		}
 		
 		return thetaDegree;
+	}
+	
+	public static double findTravelTime(double lat1, double long1, double lat2, double long2, Airplane plane) {
+		return calculateDistance(lat1, long1, lat2, long2)/plane.getAirspeed();
 	}
 	
 	public static FlightPlan planFlight(Airplane plane, Airport airport1, Airport airport2) {
@@ -95,6 +115,8 @@ public class FlightPlan {
 		plan.setDestination(airport2);
 		
 		double heading = findHeading(airport1, airport2);
+		plan.setHeading(heading);
+		
 		double furthestLat = airport1.getLatitude();
 		double furthestLong = airport1.getLongitude();
 		double slope = (airport2.getLatitude() - airport1.getLatitude())/(airport2.getLongitude() - airport1.getLongitude());
@@ -118,15 +140,17 @@ public class FlightPlan {
 			
 			while(notThere) {
 				count += 1;
-				System.out.println("count: " + count);
+				//System.out.println("count: " + count);
 				//Case 2: The airplane cannot make the trip. 
 				//latitude of point = la2 =  asin(sin la1 * cos Ad  + cos la1 * sin Ad * cos theta)
 				furthestLat = Math.asin(Math.sin(temp.getLatitude()) * Math.cos(planeDistance)  + Math.cos(temp.getLatitude()) * Math.sin(planeDistance) * Math.cos(heading));
 				furthestLong = temp.getLongitude() + (Math.atan2(Math.sin(heading) * Math.sin(planeDistance) * Math.cos(temp.getLatitude()) , Math.cos(planeDistance) - Math.sin(temp.getLatitude()) * Math.sin(airport2.getLatitude())));
 				//longitude  of second point = lo2 = lo1 + atan2(sin theta * sin Ad * cos la1 , cos Ad � sin la1 * sin la2)
-				System.out.println("Furthest Longitude: " + furthestLong);
+				System.out.println("Leg #" + (count + 1));
+				System.out.println("Flight time: " + findTravelTime(temp.getLatitude(), temp.getLongitude(), furthestLat, furthestLong, plane) + " hours");
 				System.out.println("Furthest Latitude: " + furthestLat);
 				System.out.println("calculate distance: " + calculateDistance(furthestLat, furthestLong, airport2.getLatitude(), airport2.getLongitude()));
+				System.out.println("Travel time for this leg: " + calculateDistance(furthestLat, furthestLong, airport2.getLatitude(), airport2.getLongitude()));
 				//System.out.println("airport long used in calculation: " + temp.getLongitude());
 				//System.out.println("airport lat used in calculation: " + temp.getLatitude() + "\n");
 				distanceTravelled += calculateDistance(furthestLat, furthestLong, airport2.getLatitude(), airport2.getLongitude());
@@ -149,19 +173,29 @@ public class FlightPlan {
 				temp.setLatitude(furthestLat);
 				temp.setLongitude(furthestLong);
 				
-				if(planeDistance >= calculateDistance(temp, airport2) || count >= 100) {
+				if(planeDistance >= calculateDistance(temp, airport2)) {
 					notThere = false;
 					plan.setDistance(distanceTravelled);
+				}
+				
+				else if(count >= 20) {
+					plan.setDistance(distanceTravelled);
+					break;
 				}
 				
 				//Next, repeat step 2, but use the location of the newly created refuel stop as the starting point. 
 				//Repeat until the plane can reach its destination	
 			}
-			System.out.println("number of refuel stops needed: " + count);
+			if(notThere) {				
+				System.out.println("Destination requires too many fuel stops! (over 20). Flight Cancelled.");
+			}
+			else {				
+				System.out.println("number of refuel stops needed: " + count);
+			}
 		}
 		//Step 4: Display the results of the flight, and all of the refuel stops created.
 		//System.out.println("stops after exiting loop are: " + coordinates.toString());
-		plan.setHeading(heading);
+		
 		//plan.setRefuelStops(stops);
 		return plan;
 	}

@@ -2,231 +2,194 @@ package flightPlanner;
 import java.io.*;
 import java.util.*;
 
-public class AirplaneManager{ //import airplane
+public class AirplaneManager extends Airplane{ //import airplane
+	private ArrayList<Airplane> planes;
 	
-	public static void Add() throws IOException {
-		String str1 = "";
-		String str2 = "";
-		Double int1 = 0.0;
-		Double int2 = 0.0;
-		int int3 = 0;
-		Double int4 = 0.0;
-		//Airplane(Str1, Str2, int1, int2, int3, int4)
-		Airplane A1 = new Airplane();
-		System.out.println("Enter Make:");
-		Scanner input = new Scanner(System.in);
-        str1 = input.next();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            for (int i = 0; i < str1.length(); i++)
-                fw.write(str1.charAt(i));
-            fw.write(System.lineSeparator());  
-            System.out.println("Successfully written");
-            fw.close();
-  
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
-        
-    	System.out.println("Enter Model:");
-        str2 = input.next();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            for (int i = 0; i < str2.length(); i++)
-                fw.write(str2.charAt(i));
-            fw.write(System.lineSeparator());  
-            System.out.println("Successfully written");
-  
-            fw.close();
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
-        
-    	System.out.println("Enter FuelEffiancy in MPH:");
-        int1 = input.nextDouble();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            Double.toString(int1);
-            fw.write(Double.toString(int1));
-            fw.write(System.lineSeparator());  
-            System.out.println("Successfully written");
-  
-            fw.close();
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
-        
-        System.out.println("Enter Fuel Capacity in MPH:");
-        int2 = input.nextDouble();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            Double.toString(int2);
-            fw.write(Double.toString(int2));
-            fw.write(System.lineSeparator());  
-            System.out.println("Successfully written");
-  
-            fw.close();
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
-   
-        System.out.println("Enter Fuel Type:");
-        int3 = input.nextInt();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            Double.toString(int3);
-            fw.write(Double.toString(int3));
-            fw.write(System.lineSeparator());  
-            System.out.println("Successfully written");
-  
-            fw.close();
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
-        System.out.println("Enter Airspeed:");
-        int4 = input.nextDouble();
-        try {
-            // attach a file to FileWriter
-            FileWriter fw = new FileWriter("src/airport.txt", true);
-  
-            //Puts each character into File and makes a new line for more information.
-            Double.toString(int4);
-            fw.write(Double.toString(int4));
-            fw.write(System.lineSeparator());
-            fw.write(System.lineSeparator());
-            System.out.println("Successfully written");
-  
-            fw.close();
-        }
-        catch (Exception e) {
-            e.getStackTrace();}
+	public ArrayList<Airplane> getPlanes() {
+		return planes;
 	}
-	public static void Modify() throws IOException{
+
+	public void setPlanes(ArrayList<Airplane> planes) {
+		this.planes = planes;
+	}
+
+	public AirplaneManager() {
+		Scanner read;
+		try {
+			read = new Scanner (new File("src/airplanes.txt"));
+			read.useDelimiter(",");
+			
+			String make, model, type;
+			double fuelEfficiency, fuelCapacity, airSpeed;
+			ArrayList<String> fuelType = new ArrayList<String>();
+			
+			while(read.hasNext()) {
+				make = read.next();
+				model = read.next();
+				type = read.next();
+				try {
+					fuelEfficiency = Double.parseDouble(read.next());
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Something went wrong reading fuelEfficiency. fuelEfficiency has been set to 1.");
+					read.next();
+					fuelEfficiency = 1.0;
+				}
+				try {
+					fuelCapacity = Double.parseDouble(read.next());
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Something went wrong reading fuelCapacity. fuelCapacity has been set to 1.");
+					read.next();
+					fuelCapacity = 1.0;
+				}
+				
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+				
+				try {
+					airSpeed = Double.parseDouble(read.next());
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Something went wrong reading air speed. air speed has been set to 1.");
+					read.next();
+					airSpeed = 1.0;
+				}
+				System.out.println(make + model + type + fuelEfficiency + fuelCapacity + fuelType.toString() + airSpeed);
+			}
+			
+			read.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File doesn't exist!");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void Add(Airplane plane) throws IOException {
+		//Variables should be appended to the file in the order that they appear in the airplane class PIVs
+		FileWriter writer = new FileWriter("src/airplanes.txt", true);
+		writer.append(
+		plane.getMake() + "," 
+		+ plane.getModel() + ","
+		+ plane.getType() + "," 
+		+ plane.getFuelEfficiency() + "," 
+		+ plane.getFuelCapacity() + ","
+		+ plane.getFuelType().get(0).toString() + "," 
+		+ plane.getFuelType().get(1).toString() + "," 
+		+ plane.getFuelType().get(2).toString() + ","
+		+ plane.getAirspeed() 
+		+ "\n");
+		writer.close();
+	}
+	public static void Modify(Airplane plane) throws IOException{
+		FileReader reader = new FileReader("src/airplanes.txt");
+		reader.close();
 		//Will locate airport and allow user to change information.
 		//New information will be appended to list and old work will be deleted.
 	}
 	
-	public static void Delete() throws IOException{
-		//Information will be searched and once found deleted from file.
-		File file = new File("src/airport.txt");
-		File tempFile = new File("help.txt"); 
-		 
-		BufferedReader reader = new BufferedReader(new FileReader(file)); 
-		BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile)); 
-		 
-		String lineToRemove = "Help"; 
-		String currentLine; 
-		 
-		while((currentLine = reader.readLine()) != null) { 
-		 
-		// trim newline when comparing with lineToRemove 
-		    String trimmedLine = currentLine.trim(); 
-		    
-		    if(trimmedLine.equals(lineToRemove)) continue; 
-		 
-		    writer.write(currentLine + System.getProperty("line.separator")); 
-		} 
-		 
-		writer.close();  
-		reader.close();  
-		 
-		boolean successful = tempFile.renameTo(file); 
-	    Scanner search = new Scanner(System.in);
-
-	    System.out.println("Search by Make or Model");
-	    String line = search.next();
-	    Scanner scanner;
-	    try { scanner = new Scanner(file).useDelimiter(" ");
-
-	        while (scanner.hasNext()) {
-	            final String lineFromFile = scanner.nextLine();
-	            if (lineFromFile.contains(line)) {
-	                System.out.println(line);
-	                for (int i = 0; i <= 5; i++){
-	                	System.out.println(scanner.nextLine());
-	                	
-	                if (line.isBlank() == true) 
-	                	break;}
-	            }
-	        }
-	    } 
-	    catch (IOException e) {
-	        System.out.println(file.toString()+ "Not found");
-	    }
-	    
+	public static void Delete(String make) throws IOException{
+		Scanner read = new Scanner (new File("src/airplanes.txt"));
+		read.useDelimiter(",");
+		read.close();
 	}
 	
-	public static void Search() throws IOException{
+	public static boolean Search(String something) throws IOException{
 		//If the airport exists information will be displayed
 		// If not message will be displayed to user.
-		File file = new File("src/airport.txt");
-
-	    Scanner search = new Scanner(System.in);
-
-	    System.out.println("Search by Make or Model");
-	    String line = search.next();
-	    Scanner scanner;
-	    try {
-	        scanner = new Scanner(file).useDelimiter(" ");
-
-	        while (scanner.hasNext()) {
-	            final String lineFromFile = scanner.nextLine();
-	            if (lineFromFile.contains(line)) {
-	                // a match!
-	                System.out.println(line);
-	                for (int i = 0; i <= 5; i++){
-	                	System.out.println(scanner.nextLine());
-	                if (line.isBlank() == true) 
-	                	break;}
-	            }
-	        }
-	    } 
-	    catch (IOException e) {
-	        System.out.println(file.toString()+ "Not found");
-	    }
-	    
+		FileReader reader = new FileReader("src/airplanes.txt");
+		reader.close();
+		return false;
 	}
 
 	public static void Display() throws IOException{
-	       // Open the file.
-        FileReader fr = new FileReader("src/airport.txt");
-        Scanner inFile = new Scanner(fr);
+		Scanner read;
+		try {
+			read = new Scanner (new File("src/airplanes.txt"));
+			read.useDelimiter(",");
+			int count = 0;
+			String make = "", model = "", type = "", fuelEfficiency = "", fuelCapacity = "", airSpeed = "";
+			ArrayList<String> fuelType = new ArrayList<String>();
+			
+			while(read.hasNext()) {
+				count++;
+				make = read.next();
+				model = read.next();
+				type = read.next();
+				fuelEfficiency = read.next();
+				fuelCapacity = read.next();
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+				airSpeed = read.nextLine();
 
-        // Read lines from the file till end of file
-        while (inFile.hasNext())
-        {
-            // Read the next line.
-            String line = inFile.nextLine();
-            // Display the line.
-            System.out.println(line);
-        }
-
-        // Close the file.
-        inFile.close();
+				System.out.println("Airplane #" + count + ": " + make + ", " + model + ", " + type + ", " + fuelEfficiency + " liters/100mi" + ", " + fuelCapacity + " liters" + ", " + fuelType.toString() + airSpeed + " miles/hour");
+				fuelType.clear();
+			}
+			
+			read.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File doesn't exist!");
+			e.printStackTrace();
+		}
     }
-	
+	/*
+	public static void Display() throws IOException{
+		Scanner read;
+		try {
+			read = new Scanner (new File("src/airplanes.txt"));
+			read.useDelimiter(",");
+			
+			String make = "", model = "", type = "", fuelEfficiency = "", fuelCapacity = "", airSpeed = "";
+			ArrayList<String> fuelType = new ArrayList<String>();
+			
+			while(read.hasNext()) {
+				make = read.next();
+				if(read.hasNext()) {
+					model = read.next();
+					
+				}
+				if(read.hasNext()) {
+					type = read.next();
+					
+				}
+				if(read.hasNext()) {
+					fuelEfficiency = read.next();
+					
+				}
+				if(read.hasNext()) {
+					fuelCapacity = read.next();
+					
+				}
+				if(read.hasNext()) {
+					airSpeed = read.next();
+					
+				}
+				if(read.hasNext()) {
+					
+				}
+				System.out.println(make + "\n" + model + "\n" + type + "\n" + fuelEfficiency + "\n" + fuelCapacity + "\n" + fuelType.toString() + "\n" + airSpeed);
+			}
+			
+			read.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File doesn't exist!");
+			e.printStackTrace();
+		}
+    }
+	*/
 	public static void main(String[] args) throws IOException {
-		//Delete();
-		//Add();
+		Airplane plane = new Airplane();
+		//System.out.println(plane.getFuelType().get(0).toString());
+		//Add(plane);
+		//Modify(plane);
+		Display();
 		//Search();
+		//Delete();
 		//Display();
-		//Main method calls each method using a text based interface.
-		// Numbers 1 - 5 will call each method.
-		//For example: User will input 1 to add airplane or 4 to Search the database.
 	}
 }
