@@ -500,11 +500,21 @@ public class Main {
 		Airplane airplane = new Airplane();
 		
 		while(!validInput) {
+			boolean isNumber = true;
 			System.out.println("Enter the make:"); //data validation to make sure it's not a number?
 			make = scan.nextLine();
 			if(make.length() <=30 && make.length() >=1) {
+			try {
+	            Double num = Double.parseDouble(make);
+	        } catch (NumberFormatException e) {
+	            isNumber = false;
+	        }
+			if(make.length() <=50 && make.length() >=1 && !isNumber) {
 				validInput = true;	
 				airplane.setMake(make);
+			}
+			else if(isNumber) {
+				System.out.println("Make cannot be only numbers!");
 			}
 			else {
 				System.out.println("make must be between 1-30 characters!\n");
