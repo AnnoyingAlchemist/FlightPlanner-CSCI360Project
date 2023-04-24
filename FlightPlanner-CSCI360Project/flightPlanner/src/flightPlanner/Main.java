@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		/*
 		System.out.println("Created Menus displayed below:\n");
 		airportMenu();
@@ -61,22 +61,6 @@ public class Main {
 					break;
 			}
 		}
-		
-		//displayMenu() should run in a while loop that only breaks when the user chooses to exit the program.
-		//Call a function corresponding to the option the user picks.
-			//Option 4 should close the program and break the while loop
-		
-			//Airport manager and Airplane manager options will call airportMenu() and airplaneMenu() respectively, 
-			//and put the user in an another while loop that only breaks when they choose to go back.
-				//In the airport and airplane manager menu, each option should call its corresponding function from the
-				//AirportManager and AirplaneManager classes: add(), modify(), delete(), and display().
-				//After the chosen option is resolved, call airportMenu() or airplaneMenu() again
-		
-				//'Back' should call displayMenu() and break the while loop.
-		
-			//'Plan a flight' will ask the user to enter a plane, starting airport, and destination, and then call 
-				//planFlight() from the FlightPlan class using the given answers as parameters for the function
-				//any invalid responses will display an error and send the user back to the displayMenu() menu.
 	}
 
 	public static boolean checkLogin(String user, String pass) {
@@ -262,8 +246,7 @@ public class Main {
 			}
 			else {
 				System.out.println("Frequency must be a number!\n");
-			}
-			
+			}	
 		}
 		
 		validInput = false;
@@ -785,20 +768,82 @@ public class Main {
 		return runway;
 	}
 	
-	public static void planFlightLoop() {
+	public static void planFlightLoop() throws IOException {
+		AirportManager airManager = new AirportManager();
+		AirplaneManager planeManager = new AirplaneManager();
+		Airport start = new Airport();
+		Airport destination = null;
+		Airplane plane = null;
 		boolean validInput = false;
 		FlightPlan plan = new FlightPlan();
-		try {
-			AirportManager.Display();
-		} catch (IOException e) {
-			System.out.println("Something went wrong and file cannot be found!");
-			e.printStackTrace();
-		}
+		
 		while (!validInput) {
 			Scanner scan = new Scanner(System.in);  
-			System.out.println("Menu option:");
-			String menuOption = scan.nextLine();
-			System.out.println("");
+			airManager.Display();
+			System.out.println("Type index of starting airport (as shown on list):");
+			if(scan.hasNextInt()) {
+				int index = scan.nextInt() - 1;
+				if(airManager.getAirports().size() > index && index >=0) {
+					start = airManager.getAirports().get(index);
+					validInput = true;
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
 		}
+		
+		validInput = false;
+		
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			airManager.Display();
+			System.out.println("Type index of destination airport (as shown on list):");
+			if(scan.hasNextInt()) {
+				int index = scan.nextInt() - 1;
+				if(airManager.getAirports().size() > index && index >=0) {
+					if(airManager.getAirports().get(index) != start) {
+						destination = airManager.getAirports().get(index);
+						validInput = true;						
+					}
+					else {
+						System.out.println("Cannot pick the same airport!\n");
+					}
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
+		}
+		
+		validInput = false;
+		
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			planeManager.Display();
+			System.out.println("Type index of airplane (as shown on list):");
+			if(scan.hasNextInt()) {
+				int index = scan.nextInt() - 1;
+				if(planeManager.getPlanes().size() > index && index >=0) {
+						plane = planeManager.getPlanes().get(index);
+						validInput = true;						
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
+		}
+		
+		FlightPlan.planFlight(plane, start, destination).displayInfo();
+		
 	}
 }
