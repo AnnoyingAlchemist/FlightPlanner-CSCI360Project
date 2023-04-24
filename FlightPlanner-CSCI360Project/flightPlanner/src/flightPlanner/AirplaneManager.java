@@ -226,7 +226,7 @@ public class AirplaneManager{ //import airplane
 		//manage.Modify(1, "make", "IT WORKS!!!!");
 		//manage.Delete(0);
 		Display();
-		manage.Search("rad", "bad");
+		//manage.Search("rad", "bad");
 		//Delete();
 		//Display();
 	}
