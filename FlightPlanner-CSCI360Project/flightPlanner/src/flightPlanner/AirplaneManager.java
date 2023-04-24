@@ -108,7 +108,7 @@ public class AirplaneManager extends Airplane{ //import airplane
 		Scanner read;
 		try {
 			read = new Scanner (new File("src/airplanes.txt"));
-			read.useDelimiter(",");
+			read.useDelimiter(",|\n");
 			int count = 0;
 			String make = "", model = "", type = "", fuelEfficiency = "", fuelCapacity = "", airSpeed = "";
 			ArrayList<String> fuelType = new ArrayList<String>();
@@ -123,9 +123,9 @@ public class AirplaneManager extends Airplane{ //import airplane
 				fuelType.add(read.next());
 				fuelType.add(read.next());
 				fuelType.add(read.next());
-				airSpeed = read.nextLine();
+				airSpeed = read.next();
 
-				System.out.println("Airplane #" + count + ": " + make + ", " + model + ", " + type + ", " + fuelEfficiency + " liters/100mi" + ", " + fuelCapacity + " liters" + ", " + fuelType.toString() + airSpeed + " miles/hour");
+				System.out.println("Airplane #" + count + ": " + make + ", " + model + ", " + type + ", " + fuelEfficiency + " liters per 100 miles" + ", " + fuelCapacity + " liters" + ", Fuel types: " + fuelType.toString() + ", " +airSpeed + " miles/hour");
 				fuelType.clear();
 			}
 			

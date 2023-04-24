@@ -44,6 +44,7 @@ public class Airport { //extends Location? maybe?
 		this.radioType = temp;
 		this.frequency = temp2;
 		this.fuelType = temp3;
+		//runway = null;
 	}
 	
 	/*
@@ -140,7 +141,7 @@ public class Airport { //extends Location? maybe?
 		System.out.println("Radio Types: " + radioString);
 		System.out.println("Compatible Fuel Types: " + fuelString);
 		//System.out.println(airport.getBeacons().toString());
-		System.out.println("Runway ID: " + getRunway().getId());
-		System.out.println("Runway Length: " + getRunway().getLength() + " miles");
+		//System.out.println("Runway ID: " + getRunway().getId());
+		//System.out.println("Runway Length: " + getRunway().getLength() + " miles");
 	}
 }

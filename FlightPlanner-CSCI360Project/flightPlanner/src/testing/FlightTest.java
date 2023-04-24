@@ -42,7 +42,7 @@ public class FlightTest {
 		//FlightPlan.planFlight(plane, air1, air2);
 		FlightPlan plan = FlightPlan.planFlight(plane, air1, air2);
 		plan.displayInfo();
-		System.out.println("Travel Time: " + plan.getDistance()/plane.getAirspeed() + " Hours");
+		System.out.println("Travel Time: " + plan.getDistance()/(plane.getAirspeed()*1.15078) + " Hours");
 	}
 
 }

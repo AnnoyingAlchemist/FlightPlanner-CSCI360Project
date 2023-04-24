@@ -95,7 +95,7 @@ public class FlightPlan {
 	}
 	
 	public static double findTravelTime(double lat1, double long1, double lat2, double long2, Airplane plane) {
-		return calculateDistance(lat1, long1, lat2, long2)/plane.getAirspeed();
+		return calculateDistance(lat1, long1, lat2, long2)/(plane.getAirspeed()*1.15078); //remember to convert from knots to miles 1 knot ---> 1.15078 miles
 	}
 	
 	public static FlightPlan planFlight(Airplane plane, Airport airport1, Airport airport2) {

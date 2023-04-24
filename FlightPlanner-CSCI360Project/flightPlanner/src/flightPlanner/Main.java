@@ -410,7 +410,7 @@ public class Main {
 		}
 		
 		validInput = false;
-		
+		/*
 		while(!validInput) {
 			String temp = "";
 			System.out.println("Add runway? (y/n): ");
@@ -426,7 +426,7 @@ public class Main {
 				System.out.println("Invalid input.\n");
 			}
 		}
-		
+		*/
 		airport.setFuelType(fuelType); 
 		System.out.println();
 		
@@ -495,19 +495,19 @@ public class Main {
 		Double fuelEfficiency; //in liters per hundred miles
 		Double fuelCapacity; //in liters
 		ArrayList<String> fuelType = new ArrayList<>(); // | jet A | Jet A1 | Jet B | ABGAS |
-		Double airSpeed; //in miles per hour
+		Double airSpeed; //in knots
 		
 		Airplane airplane = new Airplane();
 		
 		while(!validInput) {
 			System.out.println("Enter the make:"); //data validation to make sure it's not a number?
 			make = scan.nextLine();
-			if(make.length() <=50 && make.length() >=1) {
+			if(make.length() <=30 && make.length() >=1) {
 				validInput = true;	
 				airplane.setMake(make);
 			}
 			else {
-				System.out.println("make must be between 1-50 characters!\n");
+				System.out.println("make must be between 1-30 characters!\n");
 			}
 		}
 		
@@ -516,12 +516,12 @@ public class Main {
 		while(!validInput) {
 			System.out.println("Enter the model:");
 			model = scan.nextLine();
-			if(model.length() <50 && model.length() >0) {
+			if(model.length() <30 && model.length() >0) {
 				validInput = true;
 				airplane.setModel(model);
 			}
 			else {
-				System.out.println("model must be between 0-50 characters!\n");
+				System.out.println("model must be between 0-30 characters!\n");
 			}
 		}
 		
@@ -658,18 +658,18 @@ public class Main {
 			airSpeed = 2000.0;
 			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter the plane's cruising air speed: \n"
-					+ "(Units are in miles per hour)");
+					+ "(Units are in knots)");
 			if(dubScan.hasNextDouble()) {
 				airSpeed = dubScan.nextDouble(); 		
-				if(airSpeed <=100000 && airSpeed >0) {
+				if(airSpeed <=100000 && airSpeed >=10) {
 					validInput = true;
 					airplane.setAirspeed(airSpeed);
 				}
 				else if(airSpeed == 0){
 					System.out.println("Air Speed cannot be 0!\n");
 				}
-				else if(airSpeed < 0){
-					System.out.println("Air Speed must be positive!\n");
+				else if(airSpeed < 10){
+					System.out.println("Air Speed must be greater than 10!\n");
 				}
 				else {
 					System.out.println("Invalid air speed! Maximum air speed is 100,000 miles per hour!\n");
@@ -692,7 +692,7 @@ public class Main {
 		
 	}
 
-	
+	/*
 	public static void beaconMenu() { 
 		//Display a text menu full of actions that the user can take. ONLY displays the text, has no functional use.
 		System.out.println("----------------------------------------------------------\r\n"
@@ -736,12 +736,13 @@ public class Main {
 			}
 		}
 	}
+	*/
 	
-	public static void runwayMenu() {
+public static void runwayMenu() {
 		System.out.println("----------------------------------------------------------\r\n"
-				+ "1 - Add a Runway to an airport\r\n"
+				+ "1 - Create a Runway\r\n"
 				+ "2 - Modify a Runway\r\n"
-				+ "3 - Delete a Runway from an airport\r\n"
+				+ "3 - Delete a Runway\r\n"
 				+ "4 - Display all Runways\r\n"
 				+ "5 - Back\r\n"
 				+ "----------------------------------------------------------\r\n");
@@ -757,7 +758,7 @@ public class Main {
 			
 			switch(menuOption){
 				case "1":
-					createRunwayLoop(); //replace these print statements with appropriate method calls from Runway Class
+					createRunwayLoop(); //replace the print statements with appropriate method calls from Runway Class
 					break;
 				case "2":
 					System.out.println("Modify a Runway");
@@ -812,8 +813,8 @@ public class Main {
 				if((length <= 5000) && (length > 0)) {
 					validInput = true;
 				}
-				else if(length == 0) {					
-					System.out.println("Length cannot be 0!\n");
+				else if(length <= 0) {					
+					System.out.println("Length cannot be 0 or less!\n");
 				}
 				else {
 					System.out.println("Length must be under 5,000 miles!\n");
