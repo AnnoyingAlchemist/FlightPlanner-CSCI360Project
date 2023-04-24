@@ -10,7 +10,6 @@ public class Main {
 		System.out.println("Created Menus displayed below:\n");
 		airportMenu();
 		airplaneMenu();
-		beaconMenu();
 		runwayMenu();
 		*/
 		System.out.println("THIS SOFTWARE IS NOT TO BE USED FOR FLIGHT PLANNING OR NAVIGATIONAL PURPOSES"); //Replace with actual disclamer
@@ -75,11 +74,6 @@ public class Main {
 		
 				//'Back' should call displayMenu() and break the while loop.
 		
-				//'Beacons and runways' should call beaconrunwayMenu()
-					//each option should call a corresponding function from the Beacon or runway class
-					//After the chosen option is resolved, call beaconrunwayMenu() again
-					//'back' should take the user back to the airport manager menu
-		
 			//'Plan a flight' will ask the user to enter a plane, starting airport, and destination, and then call 
 				//planFlight() from the FlightPlan class using the given answers as parameters for the function
 				//any invalid responses will display an error and send the user back to the displayMenu() menu.
@@ -142,11 +136,6 @@ public class Main {
 				case "4":
 					System.out.println("Display all Airports");
 					break;
-					/*
-				case "5":
-					beaconMenuLoop(); //Should lead to a sub-menu. Call beaconMenuLoop()
-					break;
-					*/
 				case "5":
 					runwayMenuLoop(); //Should lead to a sub-menu. Call runwayMenuLoop()
 					break;
@@ -721,52 +710,6 @@ public class Main {
 		}
 	}
 
-	/*
-	public static void beaconMenu() { 
-		//Display a text menu full of actions that the user can take. ONLY displays the text, has no functional use.
-		System.out.println("----------------------------------------------------------\r\n"
-				+ "1 - Add a Beacon to an airport\r\n"
-				+ "2 - Modify a Beacon\r\n"
-				+ "3 - Delete a Beacon from an airport\r\n"
-				+ "4 - Display all Beacons\r\n"
-				+ "5 - Back\r\n"
-				+ "<Beacon Functionality has been removed for the time being>" 
-				+ "----------------------------------------------------------\r\n");
-	}
-	
-	public static void beaconMenuLoop() { //For use in the main method
-		boolean exitProgram = false;
-		while(!exitProgram) {	
-			beaconMenu();
-			Scanner scan = new Scanner(System.in);  
-			System.out.println("Menu option:");
-			String menuOption = scan.nextLine();
-			
-			switch(menuOption){
-				case "1":
-					System.out.println("Create a Beacon"); //replace these print statements with appropriate method calls from Beacon Class
-					break;
-				case "2":
-					System.out.println("Modify a Beacon");
-					break;
-				case "3":
-					System.out.println("Delete a Beacon");
-					break;
-				case "4":
-					System.out.println("Display all Beacons");
-					break;
-				case "5":
-					exitProgram = true;
-					System.out.println("exiting menu...");
-					break;
-				default:
-					System.out.println("Invalid input! Try again.\n");
-					break;
-			}
-		}
-	}
-	*/
-	
 public static void runwayMenu() {
 		System.out.println("----------------------------------------------------------\r\n"
 				+ "1 - Create a Runway\r\n"
