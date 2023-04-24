@@ -1,4 +1,5 @@
 package flightPlanner;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -504,11 +505,12 @@ public class Main {
 			System.out.println("Enter the make:"); //data validation to make sure it's not a number?
 			make = scan.nextLine();
 			if(make.length() <=30 && make.length() >=1) {
-			try {
-	            Double num = Double.parseDouble(make);
-	        } catch (NumberFormatException e) {
-	            isNumber = false;
-	        }
+				try {
+		            Double num = Double.parseDouble(make);
+		        } catch (NumberFormatException e) {
+		            isNumber = false;
+		        }
+			}
 			if(make.length() <=50 && make.length() >=1 && !isNumber) {
 				validInput = true;	
 				airplane.setMake(make);
@@ -520,6 +522,7 @@ public class Main {
 				System.out.println("make must be between 1-30 characters!\n");
 			}
 		}
+		
 		
 		validInput = false;
 		
@@ -697,9 +700,16 @@ public class Main {
 		//airplane airplane = new airplane(make, name, latitude, longitude, frequency, radioType, fuelType);
 		System.out.println("Created Airplane has the following attributes:");
 		airplane.displayInfo();
-		//airplane.Add();
+		/*
+		try {
+			AirplaneManager.Add(airplane);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("\nAirplane not added to file.\n");
+			e.printStackTrace();
+		}
+		*/
 		System.out.println("\nAirplane added to file.\n");
-		
 	}
 
 	/*
