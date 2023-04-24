@@ -151,7 +151,7 @@ public class AirplaneManager{ //import airplane
 		// If not message will be displayed to user.
 		for(Airplane airplane: this.getPlanes()) {
 			if(airplane.getMake().toLowerCase().equals(make.toLowerCase()) && airplane.getModel().toLowerCase().equals(model.toLowerCase())) {
-				System.out.println("Airport found! Displaying info...\n");
+				System.out.println("Airplane found! Displaying info...\n");
 				airplane.displayInfo();
 				return true;
 			}

@@ -190,7 +190,7 @@ public class Main {
 		Airplane airplane = new Airplane();
 		while (!validInput) {
 			Scanner scan = new Scanner(System.in);  
-			airplaneManager.Display();
+			AirplaneManager.Display();
 			System.out.println("Type index of airplane (as shown on list):");
 			if(scan.hasNextInt()) {
 				index = scan.nextInt() - 1;
@@ -826,26 +826,32 @@ public class Main {
 				+ "----------------------------------------------------------\r\n");
 	}
 	
-	public static void runwayMenuLoop() { //For use in the main method
+	public static void runwayMenuLoop() throws IOException { //For use in the main method
 		boolean exitProgram = false;
 		while(!exitProgram) {	
 			runwayMenu();
 			Scanner scan = new Scanner(System.in);  
 			System.out.println("Menu option:");
 			String menuOption = scan.nextLine();
+			RunwayManager run = new RunwayManager();
 			
 			switch(menuOption){
 				case "1":
 					createRunwayLoop(); //replace the print statements with appropriate method calls from Runway Class
 					break;
-				case "2":
-					System.out.println("Modify a Runway");
+				case "2"://Modify
+					int index = chooseRunwayLoop();
+					System.out.println("Choose attribute type to modify: ");
+					String attribute = scan.nextLine();
+					System.out.println("Type the replacement value: ");
+					String value = scan.nextLine();
+					run.Modify(index, attribute, value);
 					break;
-				case "3":
-					System.out.println("Delete a Runway");
+				case "3"://Delete
+					run.Delete(chooseRunwayLoop());
 					break;
-				case "4":
-					System.out.println("Display all Runways");
+				case "4"://Display
+					RunwayManager.Display();
 					break;
 				case "5":
 					exitProgram = true;
@@ -907,10 +913,42 @@ public class Main {
 		Runway runway = new Runway((double) length, id);
 		System.out.println("Runway ID: " + runway.getId());
 		System.out.println("Runway length: " + runway.getLength() + " miles");
-		//Runway.Add();
-		System.out.println("Runway added to file successfully.\n");
+		try {
+			RunwayManager.Add(runway);
+			System.out.println("Runway added to file successfully.\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("ERROR: Runway cannot be added to file! (File may not exist)\n");
+			e.printStackTrace();
+		}
 		
 		return runway;
+	}
+	
+	public static int chooseRunwayLoop() throws IOException {
+		boolean validInput = false;
+		int index = -1;
+		RunwayManager run = new RunwayManager();
+		Runway runway = new Runway();
+		while (!validInput) {
+			Scanner scan = new Scanner(System.in);  
+			RunwayManager.Display();
+			System.out.println("Type index of runway (as shown on list):");
+			if(scan.hasNextInt()) {
+				index = scan.nextInt() - 1;
+				if(run.getRunways().size() > index && index >=0) {
+					runway = run.getRunways().get(index);
+					validInput = true;
+				}	
+				else {
+					System.out.println("Index is out of bounds.");
+				}
+			}
+			else {
+				System.out.println("Please type in an integer.");				
+			}
+		}
+		return index;
 	}
 	
 	public static void planFlightLoop() throws IOException {

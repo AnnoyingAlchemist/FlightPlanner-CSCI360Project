@@ -1,10 +1,14 @@
 package flightPlanner;
-
 import java.io.IOException;
 
 public class Runway {
-	private double length; // in meters
+	private double length; // in miles
 	private String id;
+	
+	public Runway() {
+		length = 1.0;
+		id = "unknown";
+	}
 	
 	public double getLength() {
 		return length;
@@ -36,22 +40,4 @@ public class Runway {
 		
 	}
 	
-	 // Methods for storing runway information
-	 
-	public static void Add() throws IOException {
-		
-	}
-	public static void Modify() throws IOException{
-		
-	}
-	public static void Delete() throws IOException{
-		
-	}
-	public static void Search() throws IOException{
-		
-		
-	}
-	public static void Display() throws IOException{
-		
-	}
 }
