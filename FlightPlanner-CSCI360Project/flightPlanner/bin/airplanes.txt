@@ -1,2 +1,1 @@
-rad,bad,jet,45.0,56.0,JETA,N/A,AVGAS,56.0
-Boeing,740-7,jet,5.0,67.0,JETA,N/A,AVGAS,670.0
+my,guy,jet,65.0,4000.0,JETA,N/A,N/A,67.0
