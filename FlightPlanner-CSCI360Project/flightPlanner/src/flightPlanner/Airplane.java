@@ -10,7 +10,7 @@ public class Airplane {
 	private Double fuelEfficiency; //in liters per hundred miles
 	private Double fuelCapacity; //in liters
 	private ArrayList<String> fuelType; // | 0 = jet A | 1 = Jet A1 | 2 = Jet B | 3 = ABGAS |
-	private Double airspeed; //in miles per hour //should be in knots
+	private Double airspeed; //should be in knots
 	
 	public Airplane() {
 		make = "N/A";               
@@ -84,6 +84,6 @@ public class Airplane {
 		String fuelString = getFuelType().stream().map(Object::toString).collect(Collectors.joining(", "));
 		
 		System.out.println("Compatible Fuel Types: " + fuelString);
-		System.out.println("Cruising Airspeed: " + getAirspeed() + " miles per hour");
+		System.out.println("Cruising Airspeed: " + getAirspeed() + " knots");
 	}
 }

@@ -86,7 +86,7 @@ public class Main {
 	}
 
 	public static boolean checkLogin(String user, String pass) {
-		if(user.toLowerCase().equals("brandon") && pass.toLowerCase().equals("admin")) {
+		if(user.toLowerCase().strip().equals("brandon") && pass.toLowerCase().strip().equals("admin")) {
 			return true;
 		}
 		else {
@@ -511,7 +511,7 @@ public class Main {
 		            isNumber = false;
 		        }
 			}
-			if(make.length() <=50 && make.length() >=1 && !isNumber) {
+			if(make.length() <=30 && make.length() >=1 && !isNumber) {
 				validInput = true;	
 				airplane.setMake(make);
 			}
@@ -527,14 +527,25 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			System.out.println("Enter the model:");
+			boolean isNumber = true;
+			System.out.println("Enter the model:"); //data validation to model sure it's not a number?
 			model = scan.nextLine();
-			if(model.length() <30 && model.length() >0) {
-				validInput = true;
+			if(model.length() <=30 && model.length() >=1) {
+				try {
+		            Double num = Double.parseDouble(model);
+		        } catch (NumberFormatException e) {
+		            isNumber = false;
+		        }
+			}
+			if(model.length() <=30 && model.length() >=1 && !isNumber) {
+				validInput = true;	
 				airplane.setModel(model);
 			}
+			else if(isNumber) {
+				System.out.println("model cannot be only numbers!");
+			}
 			else {
-				System.out.println("model must be between 0-30 characters!\n");
+				System.out.println("model must be between 1-30 characters!\n");
 			}
 		}
 		
@@ -685,7 +696,7 @@ public class Main {
 					System.out.println("Air Speed must be greater than 10!\n");
 				}
 				else {
-					System.out.println("Invalid air speed! Maximum air speed is 100,000 miles per hour!\n");
+					System.out.println("Invalid air speed! Maximum air speed is 100,000 knots!\n");
 				}
 			}
 			else {
@@ -700,16 +711,14 @@ public class Main {
 		//airplane airplane = new airplane(make, name, latitude, longitude, frequency, radioType, fuelType);
 		System.out.println("Created Airplane has the following attributes:");
 		airplane.displayInfo();
-		/*
+		
 		try {
 			AirplaneManager.Add(airplane);
+			System.out.println("\nAirplane added to file.\n");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("\nAirplane not added to file.\n");
+			System.out.println("\nERROR: Airplane not added to file.\n");
 			e.printStackTrace();
 		}
-		*/
-		System.out.println("\nAirplane added to file.\n");
 	}
 
 	/*
