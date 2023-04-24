@@ -493,14 +493,23 @@ public class Main {
 		Airplane airplane = new Airplane();
 		
 		while(!validInput) {
+			boolean isNumber = true;
 			System.out.println("Enter the make:"); //data validation to make sure it's not a number?
 			make = scan.nextLine();
-			if(make.length() <=50 && make.length() >=1) {
+			try {
+	            Double num = Double.parseDouble(make);
+	        } catch (NumberFormatException e) {
+	            isNumber = false;
+	        }
+			if(make.length() <=50 && make.length() >=1 && !isNumber) {
 				validInput = true;	
 				airplane.setMake(make);
 			}
+			else if(isNumber) {
+				System.out.println("Make cannot be only numbers!");
+			}
 			else {
-				System.out.println("make must be between 1-50 characters!\n");
+				System.out.println("Make must be between 1-50 characters!\n");
 			}
 		}
 		
@@ -509,12 +518,12 @@ public class Main {
 		while(!validInput) {
 			System.out.println("Enter the model:");
 			model = scan.nextLine();
-			if(model.length() <50 && model.length() >0) {
+			if(model.length() <= 50 && model.length() >0) {
 				validInput = true;
 				airplane.setModel(model);
 			}
 			else {
-				System.out.println("model must be between 0-50 characters!\n");
+				System.out.println("model must be between 1-50 characters!\n");
 			}
 		}
 		
