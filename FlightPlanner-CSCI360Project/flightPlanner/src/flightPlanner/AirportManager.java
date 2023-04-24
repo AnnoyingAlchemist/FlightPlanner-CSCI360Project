@@ -14,35 +14,41 @@ public class AirportManager{ //import airports
 	
 	public AirportManager() {
 		Scanner read;
-		ArrayList<Airplane> planeList = new ArrayList<Airplane>(); 
+		ArrayList<Airport> airportList = new ArrayList<Airport>(); 
+		ArrayList<String> radioType = new ArrayList<String>();
+		radioType.add("N/A");
+		radioType.add("N/A");
+		radioType.add("N/A");
 		ArrayList<String> fuelType = new ArrayList<String>();
 		fuelType.add("N/A");
 		fuelType.add("N/A");
 		fuelType.add("N/A");
-		airports = planeList;
+		airports = airportList;
 		try {
-			read = new Scanner (new File("src/airplanes.txt"));
+			read = new Scanner (new File("src/airports.txt"));
 			read.useDelimiter(",|\n");
-
+			int count = 0;
 			while(read.hasNext()) {
-				Airplane tempPlane = new Airplane();
-				tempPlane.setMake(read.next());
-				tempPlane.setModel(read.next());
-				tempPlane.setType(read.next());
-				tempPlane.setFuelEfficiency(Double.parseDouble(read.next()));
-				tempPlane.setFuelCapacity(Double.parseDouble(read.next()));
-				//fuelCapacity = read.next();
+				count++;
+				
+				Airport tempAirport = new Airport(); 	
+				tempAirport.setICAO(read.next());
+				tempAirport.setName(read.next());
+				tempAirport.setLatitude(Double.parseDouble(read.next()));
+				tempAirport.setLongitude(Double.parseDouble(read.next()));
+				tempAirport.setFrequency(Double.parseDouble(read.next()));
+				
+				radioType.set(0, read.next());
+				radioType.set(1, read.next());
+				radioType.set(2, read.next());
+				
 				fuelType.set(0, read.next());
 				fuelType.set(1, read.next());
 				fuelType.set(2, read.next());
-				tempPlane.setFuelType(fuelType);
-				tempPlane.setAirspeed(Double.parseDouble(read.next()));
-				
-				//System.out.println("Plane #" + count + ":");
-				//tempPlane.displayInfo();
+				//tempAirport.setFuelType(fuelType);
+				//System.out.println("Airport #" + count + ":");
 				//System.out.println();
-				airports.add(tempPlane);
-				//fuelType.clear();
+				airports.add(tempAirport);
 			}
 			
 			read.close();
@@ -54,35 +60,170 @@ public class AirportManager{ //import airports
 	}
 	
 	public static void Add(Airport airport) throws IOException {
-			//
+		//Variables should be appended to the file in the order that they appear in the airport class PIVs
+				FileWriter writer = new FileWriter("src/airports.txt", true);
+				writer.append(
+				airport.getICAO() + "," 
+				+ airport.getName() + ","
+				+ airport.getLatitude() + "," 
+				+ airport.getLongitude() + "," 
+				+ airport.getFrequency() + ","
+				
+				+ airport.getRadioType().get(0).toString() + "," 
+				+ airport.getRadioType().get(1).toString() + "," 
+				+ airport.getRadioType().get(2).toString() + "," 
+				
+				+ airport.getFuelType().get(0).toString() + "," 
+				+ airport.getFuelType().get(1).toString() + "," 
+				+ airport.getFuelType().get(2).toString() + "\n");
+				writer.close();
         }
 
 	
-	public static void Modify() throws IOException{
+	public void Modify(int index, String attribute, String value) throws IOException{
 		//Will locate airport and allow user to change information.
 		//New information will be appended to list and old work will be deleted.
+		switch(attribute.toLowerCase().strip()) {
+			case "icao":
+				this.getAirports().get(index).setICAO(value);
+				this.overwriteFile();
+				break;
+			case "name":
+				this.getAirports().get(index).setName(value);
+				this.overwriteFile();
+				break;
+			case "latitude":
+				try {
+					this.getAirports().get(index).setLatitude(Double.parseDouble(value));
+					this.overwriteFile();
+					break;
+					}
+					catch(NumberFormatException e){
+						System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+						e.printStackTrace();
+						break;
+					}
+			case "longitude":
+				try {
+					this.getAirports().get(index).setLongitude(Double.parseDouble(value));
+					this.overwriteFile();
+					break;
+				}
+				catch(NumberFormatException e){
+					System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+					e.printStackTrace();
+					break;
+				}
+			case "frequency":
+				try {
+					this.getAirports().get(index).setFrequency(Double.parseDouble(value));
+					this.overwriteFile();
+					break;
+				}
+				catch(NumberFormatException e){
+					System.out.println("Something has gone horribly wrong with Modify() for Airport!");
+					e.printStackTrace();
+					break;
+				}
+			default:
+				System.out.println("invalid request");
+				break;
+			}
 	}
 	
-	public static void Delete() throws IOException{
+	public void Delete(int index) throws IOException{
 		//Information will be searched and once found deleted from file.
+		this.getAirports().remove(index);
+		this.overwriteFile();
 	}
 	
-	public static void Search() throws IOException{
+	public boolean Search(String ICAO) throws IOException{
 		//If the airport exists information will be displayed
 		// If not message will be displayed to user.
+		for(Airport airport: this.getAirports()) {
+			if(airport.getICAO().toLowerCase().equals(ICAO.toLowerCase())) {
+				System.out.println("Airport found! Displaying info...\n");
+				airport.displayInfo();
+				return true;
+			}
+		}
+			return false;
 	}
 
 	public static void Display() throws IOException{
+		Scanner read;
+		try {
+			read = new Scanner (new File("src/airports.txt"));
+			read.useDelimiter(",|\n");
+			int count = 0;
+			String icao = "", name = "", latitude = "", longitude = "", frequency = "";
+			ArrayList<String> radioType = new ArrayList<String>();
+			ArrayList<String> fuelType = new ArrayList<String>();
+			
+			while(read.hasNext()) {
+				count++;
+				icao = read.next();
+				name = read.next();
+				latitude = read.next();
+				longitude = read.next();
+				frequency = read.next();
+				
+				radioType.add(read.next());
+				radioType.add(read.next());
+				radioType.add(read.next());
+				
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+				fuelType.add(read.next());
+
+
+				System.out.println("Airport #" + count + ": " + icao + ", " + name + ", " + latitude + " degrees, " + longitude + " degrees, " + frequency + " liters" + ", Radio types: " + radioType.toString() + ", " + ", " + " Fuel types: " + fuelType.toString());
+				fuelType.clear();
+				radioType.clear();
+			}
+			
+			read.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File doesn't exist!");
+			e.printStackTrace();
+		}
     }
 	
+	public void overwriteFile() throws IOException { //Should only be called on an instance of AirportManager class.
+		//Completely overwrites airports.txt with a new file based on the manager object this is called on AS SOON AS IT IS CALLED. 
+		//BE VERY CAREFUL WITH THIS!
+		AirportManager manage = new AirportManager();
+		manage.setAirports(this.getAirports());
+		
+		FileWriter writer = new FileWriter("src/airports.txt");
+		for(Airport airport: manage.getAirports()) {
+			writer.append(
+			airport.getICAO() + "," 
+			+ airport.getName() + ","
+			+ airport.getLatitude() + "," 
+			+ airport.getLongitude() + "," 
+			+ airport.getFrequency() + ","
+			+ airport.getRadioType().get(0) + "," 
+			+ airport.getRadioType().get(1) + "," 
+			+ airport.getRadioType().get(2) + ","
+			+ airport.getFuelType().get(0) + "," 
+			+ airport.getFuelType().get(1) + "," 
+			+ airport.getFuelType().get(2)
+			+ "\n");
+		}
+		writer.close();
+	}
+	
 	public static void main(String[] args) throws IOException {
-		//Delete();
+		//Airport air = new Airport();
+		//Add(air);
+		AirportManager manager = new AirportManager();
+		//manager.Delete(0);
 		//Add();
 		//Search();
-		//Display();
-		//Main method calls each method using a text based interface.
-		// Numbers 1 - 5 will call each method.
-		//For example: User will input 1 to add airplane or 4 to Search the database.
+		//manager.Modify(0, "icao", "BEES");
+		Display();
 	}
 
 	

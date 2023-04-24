@@ -8,13 +8,13 @@ public class Airport { //extends Location? maybe?
 	private String name;
 	private Double latitude; //negative values represent going south, positive values represent going north
 	private Double longitude;//negative values represent going west, positive values represent going east
-	private ArrayList<Double> frequency;
+	private double frequency;
 	private ArrayList<String> radioType;
 	private ArrayList<String> fuelType;
 	//private Beacon[] beacons;
 	private Runway runway;
 	
-	public Airport(String icao, String name, Double latitude, Double longitude, ArrayList<Double> freq, ArrayList<String> radioType, ArrayList<String> fuelType) {
+	public Airport(String icao, String name, Double latitude, Double longitude, double freq, ArrayList<String> radioType, ArrayList<String> fuelType) {
 		this.ICAO = icao;
 		this.name = name;
 		this.latitude = latitude;
@@ -26,36 +26,23 @@ public class Airport { //extends Location? maybe?
 	
 	public Airport() {
 		ArrayList<String> temp = new ArrayList<>();
-		ArrayList<Double> temp2 = new ArrayList<>();
-		ArrayList<String> temp3 = new ArrayList<>();
+		ArrayList<String> temp2 = new ArrayList<>();
 		temp.add("N/A");
 		temp.add("N/A");
 		temp.add("N/A");
-		temp2.add(0.0);
-		temp2.add(0.0);
-		temp2.add(0.0);
-		temp3.add("N/A");
-		temp3.add("N/A");
-		temp3.add("N/A");
+		temp2.add("N/A");
+		temp2.add("N/A");
+		temp2.add("N/A");
 		this.ICAO = "NULL";
-		this.name = "N/A";
+		this.name = "N/A"; 
 		this.latitude = 0.0;
 		this.longitude = 0.0;
 		this.radioType = temp;
-		this.frequency = temp2;
-		this.fuelType = temp3;
+		this.frequency = 118.0;
+		this.fuelType = temp2;
 		//runway = null;
 	}
 	
-	/*
-	public Beacon[] getBeacons() {
-		return beacons;
-	}
-	
-	public void setBeacons(Beacon[] beacon) {
-		this.beacons = beacon;
-	}
-	*/
 	public String getICAO() {
 		return ICAO;
 	}
@@ -83,11 +70,11 @@ public class Airport { //extends Location? maybe?
 		this.latitude = latitude;
 	}
 	
-	public ArrayList<Double> getFrequency() {
+	public double getFrequency() {
 		return frequency;
 	}
 	
-	public void setFrequency(ArrayList<Double> frequency) {
+	public void setFrequency(double frequency) {
 		//Should only be called with an array that holds double values between 118 to 135.975
 		this.frequency = frequency;
 	
@@ -133,11 +120,10 @@ public class Airport { //extends Location? maybe?
 		System.out.println("Latitude: " + getLatitude());
 		System.out.println("Longitude:" + getLongitude());
 		
-		String frequencyString = getFrequency().stream().map(Object::toString).collect(Collectors.joining(", "));
 		String radioString = getRadioType().stream().map(Object::toString).collect(Collectors.joining(", "));
 		String fuelString = getFuelType().stream().map(Object::toString).collect(Collectors.joining(", "));
 		
-		System.out.println("Frequencies: " + frequencyString);
+		System.out.println("Frequencies: " + frequency);
 		System.out.println("Radio Types: " + radioString);
 		System.out.println("Compatible Fuel Types: " + fuelString);
 		//System.out.println(airport.getBeacons().toString());

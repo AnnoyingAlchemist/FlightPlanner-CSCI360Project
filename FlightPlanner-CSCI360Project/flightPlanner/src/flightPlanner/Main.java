@@ -166,7 +166,7 @@ public class Main {
 		String name = "";
 		double latitude = 0.0;
 		double longitude = 0.0;
-		ArrayList<Double> frequency = new ArrayList<>();
+		double frequency = 0.0;
 		ArrayList<String> radioType = new ArrayList<>();
 		ArrayList<String> fuelType = new ArrayList<>();
 		
@@ -251,13 +251,12 @@ public class Main {
 			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter a frequency (from 118 to 135.975): ");
 			if(dubScan.hasNextDouble()) {
-				frequency.add(dubScan.nextDouble()); 				
-				if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
+				frequency= dubScan.nextDouble(); 				
+				if(frequency <= 135.975 && frequency >= 118) {
 					validInput = true;
 					airport.setFrequency(frequency);
 				}
 				else {
-					frequency.remove(0);
 					System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
 				}
 			}
@@ -266,27 +265,6 @@ public class Main {
 			}
 			
 		}
-		
-		/*
-		while(!validInput) {
-			Scanner dubScan = new Scanner(System.in);
-			System.out.println("Enter the frequency: ");
-			if(dubScan.hasNextDouble()) {
-				frequency.add(scan.nextDouble()); //118 to 135.975
-				if(frequency.get(0) <= 135.975 && frequency.get(0) >= 118) {
-					validInput = true;		
-					airport.setFrequency(frequency);
-				}
-				else {
-					frequency.remove(0);
-					System.out.println("Frequency must be between 118 to 135.975 degrees!\n");
-				}
-			}
-			else {
-				System.out.println("frequency must be a number!\n");
-			}
-		}
-		*/
 		
 		validInput = false;
 		
