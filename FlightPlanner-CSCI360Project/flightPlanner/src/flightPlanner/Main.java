@@ -282,12 +282,12 @@ public class Main {
 					+ "(Negative values represent going West)");
 			if(dubScan.hasNextDouble()) {
 				longitude = dubScan.nextDouble(); 				
-				if(longitude <=90 && longitude >=-90) {
+				if(longitude <=180 && longitude >=-180) {
 					validInput = true;
 					airport.setLongitude(longitude);
 				}
 				else {
-					System.out.println("longitude must be between -90 to 90 degrees!\n");
+					System.out.println("longitude must be between -180 to 180 degrees!\n");
 				}
 			}
 			else {
@@ -661,13 +661,13 @@ public class Main {
 		validInput = false;
 		
 		while(!validInput) {
-			fuelEfficiency = 2000.0;
+			fuelEfficiency = 1.0;
 			Scanner dubScan = new Scanner(System.in);
 			System.out.println("Enter the plane's Fuel Efficiency: \n"
 					+ "(Units are in liters per hundred miles)");
 			if(dubScan.hasNextDouble()) {
 				fuelEfficiency = dubScan.nextDouble(); 		
-				if(fuelEfficiency <=1000 && fuelEfficiency >0) {
+				if(fuelEfficiency <=10000 && fuelEfficiency >0) {
 					validInput = true;
 					airplane.setFuelEfficiency(fuelEfficiency);
 				}
@@ -678,7 +678,7 @@ public class Main {
 					System.out.println("Fuel Efficiency must be positive!\n");
 				}
 				else {
-					System.out.println("Fuel Efficiency must be between 0 and 1000 liters per hundred miles!\n");
+					System.out.println("Fuel Efficiency must be between 0 and 10000 liters per hundred miles!\n");
 				}
 			}
 			else {
